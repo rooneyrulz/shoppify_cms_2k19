@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { check, validationResult } from 'express-validator';
 
 // IMPORT MODELS
 import Item from '../../models/Item';
@@ -38,7 +39,43 @@ router.get('/add', (req, res, next) =>
 //  @ROUTE              >    POST  /items/add
 //  @DESC               >    ADD ITEMS
 //  @ACCESS CONTROL     >    PUBLIC
-router.post('/add', (req, res, next) => {});
+router.post(
+  '/add',
+  [
+    check('name', 'Please enter item!')
+      .not()
+      .isEmpty(),
+    check('price', 'Please enter price!')
+      .not()
+      .isEmpty(),
+    check('provider', 'Please enter provider!')
+      .not()
+      .isEmpty(),
+  ],
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res
+        .status(400)
+        .render('item/addItem', { title: 'Add Items', errors: errors.array() });
+
+    if (req.files === null)
+      return res.status(400).render('item/addItem', {
+        title: 'Add Items',
+        error_msg: 'Please choose an image!',
+      });
+
+    const { name, price, provider } = req.body;
+
+    try {
+      //
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).render('error', { title: 'Server Error!' });
+    }
+  }
+);
 
 //  @ROUTE              >    GET  /items/:id
 //  @DESC               >    GET ITEM

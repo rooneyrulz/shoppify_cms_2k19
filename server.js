@@ -3,7 +3,6 @@ import { createServer } from 'http';
 import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import session from 'express-session';
-import upload from 'express-fileupload';
 import mongoose from 'mongoose';
 import logger from 'morgan';
 import path from 'path';
@@ -36,8 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-app.use(upload());
 
 // EXPRESS SESSION MIDDLEWARE
 app.use(

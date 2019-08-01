@@ -47,6 +47,11 @@ const itemSchema = new Schema({
     required: [true, 'Please enter provider..'],
   },
 
+  image: {
+    type: String,
+    required: [true, 'Please choose an image..'],
+  },
+
   date: {
     type: Date,
     default: Date.now,

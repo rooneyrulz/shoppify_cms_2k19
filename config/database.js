@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
-
-const mongoURI = 'mongodb://localhost:27017/cms_2k19';
+import { get } from 'config';
 
 export default async () => {
   try {
-    const isConnected = await mongoose.connect(mongoURI, {
+    const isConnected = await mongoose.connect(get('MONGO_URI'), {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,

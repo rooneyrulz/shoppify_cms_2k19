@@ -1,20 +1,44 @@
 <div class="add-item">
-  <h1 class="display-4">{{ title }}</h1>
-  <form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <div class="row">
+  <h1 class="display-4 text-center mb-5">{{ title }}</h1>
+  {{#if errors}}
+    <div class="messages-container">
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+    </div>
+  {{/if}}
+  <form action="/items/add" method="POST" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col col-sm-12">
+        <div class="form-group">
+          <label for="exampleInputName">Name</label>
+          <input type="text" name="name" class="form-control form-control-lg" id="exampleInputName" placeholder="Enter item">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-12">
+        <div class="form-group">
+          <label for="inlineFormInputGroup">Price</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">$</div>
+            </div>
+            <input type="text" name="price" class="form-control form-control-lg" id="inlineFormInputGroup" placeholder="Enter Price">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-sm-12">
+        <div class="form-group">
+          <label for="exampleInputProvider">Provider</label>
+          <input type="text" name="provider" class="form-control form-control-lg" id="exampleInputProvider"
+            placeholder="Enter provider">
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col col-sm-12">
         <div class="form-group">
           <label for="exampleFormControlFile1">Pick an image</label>
@@ -22,6 +46,6 @@
         </div>
       </div>
     </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <button type="submit" class="btn btn-info mt-3 btn-lg">Submit</button>
+  </form>
 </div>
