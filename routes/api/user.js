@@ -1,5 +1,10 @@
 import { Router } from 'express';
+import { hash } from 'bcryptjs';
 import { check, validationResult } from 'express-validator';
+import mongoose, { mongo } from 'mongoose';
+
+// IMPORT MODELS
+import User from '../../models/User';
 
 const router = Router({ strict: true });
 
@@ -25,7 +30,7 @@ router.post(
       .isEmpty(),
     check('cPassword', 'Please confirm password!')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -43,10 +48,33 @@ router.post(
     }
 
     try {
-      
+      const user = await User.findOne({ email }).exec();
+
+      if (user)
+        return res.status(409).render('auth/register', {
+          title: 'Sign Up',
+          error_msg: 'User already exist!'
+        });
+
+      const hashedPwd = await hash(password, 12);
+
+      if (!hashedPwd)
+        return res.status(500).render('error', { title: 'Server Error!' });
+
+      const newUser = new User({
+        _id: mongoose.Types.ObjectId(),
+        name,
+        email,
+        password: hashedPwd
+      });
+
+      await newUser.save();
+
+      req.flash('success_msg', "Let's login!");
+      res.redirect('/user/login');
     } catch (error) {
       console.log(error.message);
-      return res.status(500).render('error', { title: 'Server ' });
+      return res.status(500).render('error', { title: 'Server Error!' });
     }
   }
 );
