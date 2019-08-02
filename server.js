@@ -33,7 +33,9 @@ app.engine('handlebars', exphbs({ defaultLayout: 'layout' }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.urlencoded({ extended: false }));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // EXPRESS SESSION MIDDLEWARE
@@ -42,7 +44,6 @@ app.use(
     secret: 'your secret',
     resave: true,
     saveUninitialized: true,
-    cookie: { secure: false },
   })
 );
 
@@ -62,8 +63,8 @@ app.use((req, res, next) => {
 app.get('/', (req, res, next) => res.redirect('/home'));
 app.use('/home', home);
 app.use('/dashboard', dashboard);
-app.use('/register', register);
-app.use('/login', login);
+app.use('/user', register);
+app.use('/user', login);
 app.use('/items', item);
 
 server.listen(process.env.PORT || 5000, () =>

@@ -1,6 +1,13 @@
 <div class="register">
+  {{#if errors}}
+    <div class="messages-container">
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+    </div>
+  {{/if}}
   <h1 class="display-4 text-center mb-5">{{ title }}</h1>
-  <form>
+  <form action="/user/register" method="POST">
     <div class="row">
       <div class="col col-sm-12">
         <div class="form-group">

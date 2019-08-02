@@ -1,0 +1,9 @@
+.items-header {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+}
+
+.btn-like {
+  text-align: center;
+}

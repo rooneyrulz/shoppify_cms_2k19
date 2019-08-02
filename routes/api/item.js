@@ -1,9 +1,13 @@
 import { Router } from 'express';
+import mongoose from 'mongoose';
 import { check, validationResult } from 'express-validator';
 
 // IMPORT MODELS
 import Item from '../../models/Item';
 import User from '../../models/User';
+
+// IMPORT FILE UPLOAD
+import upload from '../../utils/upload';
 
 const router = Router({ strict: true });
 
@@ -18,7 +22,7 @@ router.get('/', async (req, res, next) => {
 
     if (items.length < 1)
       return res.status(409).render('item', {
-        title: 'Items Not Found',
+        title: 'Items',
         error_msg: 'Items not found!',
       });
 
@@ -38,9 +42,10 @@ router.get('/add', (req, res, next) =>
 
 //  @ROUTE              >    POST  /items/add
 //  @DESC               >    ADD ITEMS
-//  @ACCESS CONTROL     >    PUBLIC
+//  @ACCESS CONTROL     >    ADMIN
 router.post(
   '/add',
+  upload.single('image'),
   [
     check('name', 'Please enter item!')
       .not()
@@ -52,7 +57,7 @@ router.post(
       .not()
       .isEmpty(),
   ],
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())
@@ -60,16 +65,27 @@ router.post(
         .status(400)
         .render('item/addItem', { title: 'Add Items', errors: errors.array() });
 
-    if (req.files === null)
+    if (!req.file)
       return res.status(400).render('item/addItem', {
         title: 'Add Items',
-        error_msg: 'Please choose an image!',
+        error_msg: 'Choose an image!',
       });
 
     const { name, price, provider } = req.body;
 
     try {
-      //
+      const item = new Item({
+        _id: mongoose.Types.ObjectId(),
+        name,
+        price,
+        provider,
+        image: req.file.path,
+      });
+
+      await item.save();
+
+      req.flash('success_msg', 'Item added!');
+      res.redirect('/items');
     } catch (error) {
       console.log(error.message);
       return res.status(500).render('error', { title: 'Server Error!' });
@@ -104,10 +120,10 @@ router.get('/:id', async (req, res, next) => {
 //  @ACCESS CONTROL     >    PRIVATE
 router.delete('/:id', (req, res, next) => {});
 
-//  @ROUTE              >    PUT  /items/like/:id
+//  @ROUTE              >    GET  /items/like/:id
 //  @DESC               >    LIKE ITEM
 //  @ACCESS CONTROL     >    PRIVATE
-router.put('/like/:id', async (req, res, next) => {
+router.get('/like/:id', async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -148,10 +164,10 @@ router.put('/like/:id', async (req, res, next) => {
   }
 });
 
-//  @ROUTE              >    PUT  /items/unlike/:id
+//  @ROUTE              >    GET  /items/unlike/:id
 //  @DESC               >    UNLIKE ITEM
 //  @ACCESS CONTROL     >    PRIVATE
-router.put('/unlike/:id', async (req, res, next) => {
+router.get('/unlike/:id', async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -192,10 +208,10 @@ router.put('/unlike/:id', async (req, res, next) => {
   }
 });
 
-//  @ROUTE              >    PUT  /items/cart/add
+//  @ROUTE              >    GET  /items/cart/add
 //  @DESC               >    ADD ITEM TO CART
 //  @ACCESS CONTROL     >    PRIVATE
-router.put('/cart/add/:id', async (req, res, next) => {
+router.get('/cart/add/:id', async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -203,8 +219,10 @@ router.put('/cart/add/:id', async (req, res, next) => {
     const item = await Item.findById(id).exec();
 
     if (
-      user.items.filter(itm => itm.item === id).length < 1 &&
-      item.users.filter(usr => usr.user === req.user._id).length < 1
+      user.items.filter(itm => itm.item.toString() === id.toString()).length <
+        1 &&
+      item.users.filter(usr => usr.user.toString() === req.user._id.toString())
+        .length < 1
     ) {
       user.items.unshift({ item: id });
       item.users.unshift({ user: req.user._id });
