@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { hash } from 'bcryptjs';
 import { check, validationResult } from 'express-validator';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 
 // IMPORT MODELS
 import User from '../../models/User';
@@ -30,7 +30,7 @@ router.post(
       .isEmpty(),
     check('cPassword', 'Please confirm password!')
       .not()
-      .isEmpty()
+      .isEmpty(),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -53,7 +53,7 @@ router.post(
       if (user)
         return res.status(409).render('auth/register', {
           title: 'Sign Up',
-          error_msg: 'User already exist!'
+          error_msg: 'User already exist!',
         });
 
       const hashedPwd = await hash(password, 12);
@@ -65,7 +65,7 @@ router.post(
         _id: mongoose.Types.ObjectId(),
         name,
         email,
-        password: hashedPwd
+        password: hashedPwd,
       });
 
       await newUser.save();

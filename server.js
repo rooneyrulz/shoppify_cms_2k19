@@ -4,11 +4,15 @@ import exphbs from 'express-handlebars';
 import flash from 'connect-flash';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import passport from 'passport';
 import logger from 'morgan';
 import path from 'path';
 
 // IMPORT MONGO CONNECTION
 import dbConnection from './config/database';
+
+// IMPORT PASSPORT CONFIG
+import passportConfig from './config/passport';
 
 // IMPORT ROUTES
 import home from './routes/api/home';
@@ -37,6 +41,12 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+passportConfig(passport);
+
+// PASSPORT MIDDLEWARES
+app.use(passport.initialize());
+app.use(passport.session());
 
 // EXPRESS SESSION MIDDLEWARE
 app.use(
