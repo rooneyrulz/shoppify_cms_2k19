@@ -13,12 +13,17 @@ router.get('/login', (req, res, next) =>
 // @ROUTE           >       POST   /user/login
 // @DESC            >       LOGIN USER
 // @ACCESS CONTROL  >       PUBLIC
-router.post('/login', (req, res, next) =>
+router.post(
+  '/login',
   passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/user/login',
     failureFlash: true,
-  })(req, res, next)
+  }),
+  (req, res, next) => {
+    console.log(req.body);
+    res.redirect('/dashboard');
+  }
 );
 
 export default router;
