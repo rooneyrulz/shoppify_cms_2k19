@@ -29,7 +29,7 @@ mongoose.Promise = global.Promise;
 // EXECUTE MONGO CONNECTION
 dbConnection();
 
-app.use(logger('dev'));
+app.use(logger('combined'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
@@ -67,8 +67,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
-
-// EXPRESS VALIDATOR MIDDLEWARE
 
 app.get('/', (req, res, next) => res.redirect('/home'));
 app.use('/home', home);

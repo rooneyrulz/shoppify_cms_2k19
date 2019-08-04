@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
     if (items.length < 1)
       return res.status(409).render('item', {
         title: 'Items',
-        error_msg: 'Items not found!'
+        error_msg: 'Items not found!',
       });
 
     return res.status(200).render('item', { title: 'Items', items });
@@ -34,7 +34,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //  @ROUTE              >    GET  /items/add
-//  @DESC               >    GET ADD ITEMS
+//  @DESC               >    RENDER ADD ITEMS
 //  @ACCESS CONTROL     >    PUBLIC
 router.get('/add', (req, res, next) =>
   res.status(200).render('item/addItem', { title: 'Add Items' })
@@ -55,7 +55,7 @@ router.post(
       .isEmpty(),
     check('provider', 'Please enter provider!')
       .not()
-      .isEmpty()
+      .isEmpty(),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -68,7 +68,7 @@ router.post(
     if (!req.file)
       return res.status(400).render('item/addItem', {
         title: 'Add Items',
-        error_msg: 'Choose an image!'
+        error_msg: 'Choose an image!',
       });
 
     const { name, price, provider } = req.body;
@@ -79,7 +79,7 @@ router.post(
         name,
         price,
         provider,
-        image: req.file.path
+        image: req.file.path,
       });
 
       await item.save();
@@ -105,7 +105,7 @@ router.get('/:id', async (req, res, next) => {
     if (!item)
       return res.status(400).render('item/item', {
         title: 'Item Not Found',
-        error_msg: 'Item not found!'
+        error_msg: 'Item not found!',
       });
 
     return res.status(200).render('item/item', { title: 'Item', item });
@@ -254,7 +254,7 @@ router.get('/cart', async (req, res, next) => {
     if (user.items.length < 1)
       return res.status(409).render('cart', {
         title: 'Cart Items Not Found',
-        error_msg: 'Item not found!'
+        error_msg: 'Item not found!',
       });
 
     return res.status(200).render('cart', { title: 'Cart', items: user.items });

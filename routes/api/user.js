@@ -9,7 +9,7 @@ import User from '../../models/User';
 const router = Router({ strict: true });
 
 // @ROUTE             >     GET   user/register
-// @DESC              >     GET REGISTER PAGE
+// @DESC              >     RENDER REGISTER PAGE
 // @ACCESS CONTROL    >     PUBLIC
 router.get('/register', (req, res, next) =>
   res.status(200).render('auth/register', { title: 'Sign Up' })
