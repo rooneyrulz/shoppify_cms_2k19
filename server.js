@@ -18,7 +18,7 @@ import passportConfig from './config/passport';
 import home from './routes/api/home';
 import dashboard from './routes/api/dashboard';
 import register from './routes/api/user';
-import login from './routes/api/login';
+import auth from './routes/api/auth';
 import item from './routes/api/item';
 
 const app = express();
@@ -42,12 +42,6 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-passportConfig(passport);
-
-// PASSPORT MIDDLEWARES
-app.use(passport.initialize());
-app.use(passport.session());
-
 // EXPRESS SESSION MIDDLEWARE
 app.use(
   session({
@@ -68,12 +62,22 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res, next) => res.redirect('/home'));
-app.use('/home', home);
+passportConfig(passport);
+
+// PASSPORT MIDDLEWARES
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/', home);
 app.use('/dashboard', dashboard);
 app.use('/user', register);
-app.use('/user', login);
+app.use('/user', auth);
 app.use('/items', item);
+
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
 server.listen(process.env.PORT || 5000, () =>
   console.log(`server running on port ${process.env.PORT || 5000}`)

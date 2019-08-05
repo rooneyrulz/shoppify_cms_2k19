@@ -6,10 +6,10 @@ import User from '../models/User';
 
 export default passport => {
   passport.use(
-    new Strategy(async (email, password, done) => {
+    new Strategy(async (username, password, done) => {
       try {
         // FIND RIGHT EMAIL
-        const user = await User.findOne({ email }).exec();
+        const user = await User.findOne({ email: username }).exec();
 
         if (!user) return done(null, false, { message: 'User not found!' });
 
