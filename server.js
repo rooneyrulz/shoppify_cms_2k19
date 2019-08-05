@@ -68,16 +68,16 @@ passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
 app.use('/', home);
 app.use('/dashboard', dashboard);
 app.use('/user', register);
 app.use('/user', auth);
 app.use('/items', item);
-
-app.get('*', (req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
 
 server.listen(process.env.PORT || 5000, () =>
   console.log(`server running on port ${process.env.PORT || 5000}`)

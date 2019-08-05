@@ -62,7 +62,6 @@ router.post(
         return res.status(500).render('error', { title: 'Server Error!' });
 
       const newUser = new User({
-        _id: mongoose.Types.ObjectId(),
         name,
         email,
         password: hashedPwd,

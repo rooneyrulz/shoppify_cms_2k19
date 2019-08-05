@@ -9,6 +9,9 @@ import User from '../../models/User';
 // IMPORT FILE UPLOAD
 import upload from '../../utils/upload';
 
+// IMPORT PASSPORT MIDDLEWARE
+import isAuth from '../../middleware/auth';
+
 const router = Router({ strict: true });
 
 //  @ROUTE              >    GET  /items
@@ -23,7 +26,7 @@ router.get('/', async (req, res, next) => {
     if (items.length < 1)
       return res.status(409).render('item', {
         title: 'Items',
-        error_msg: 'Items not found!',
+        error_msg: 'Items not found!'
       });
 
     return res.status(200).render('item', { title: 'Items', items });
@@ -55,7 +58,7 @@ router.post(
       .isEmpty(),
     check('provider', 'Please enter provider!')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -68,18 +71,17 @@ router.post(
     if (!req.file)
       return res.status(400).render('item/addItem', {
         title: 'Add Items',
-        error_msg: 'Choose an image!',
+        error_msg: 'Choose an image!'
       });
 
     const { name, price, provider } = req.body;
 
     try {
       const item = new Item({
-        _id: mongoose.Types.ObjectId(),
         name,
         price,
         provider,
-        image: req.file.path,
+        image: req.file.path
       });
 
       await item.save();
@@ -105,7 +107,7 @@ router.get('/:id', async (req, res, next) => {
     if (!item)
       return res.status(400).render('item/item', {
         title: 'Item Not Found',
-        error_msg: 'Item not found!',
+        error_msg: 'Item not found!'
       });
 
     return res.status(200).render('item/item', { title: 'Item', item });
@@ -118,12 +120,12 @@ router.get('/:id', async (req, res, next) => {
 //  @ROUTE              >    DELETE  /items/:id
 //  @DESC               >    DELETE ITEM
 //  @ACCESS CONTROL     >    PRIVATE
-router.delete('/:id', (req, res, next) => {});
+router.delete('/:id', isAuth, (req, res, next) => {});
 
 //  @ROUTE              >    GET  /items/like/:id
 //  @DESC               >    LIKE ITEM
 //  @ACCESS CONTROL     >    PRIVATE
-router.get('/like/:id', async (req, res, next) => {
+router.get('/like/:id', isAuth, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -134,30 +136,40 @@ router.get('/like/:id', async (req, res, next) => {
 
     // CHECK IF ITEM HAVE ALREADY BEEN UNLIKED
     if (
-      item.unlikes.filter(unlike => unlike.user === req.user._id).length > 0
+      item.unlikes.filter(unlike => unlike.user.toString() === req.user.id)
+        .length > 0 &&
+      item.likes.filter(like => like.user.toString() === req.user.id).length < 1
     ) {
       // FIND REMOVEINDEX
       const removeIndex = item.unlikes
-        .map(unlike => unlike.user)
-        .indexOf(req.user._id);
+        .map(unlike => unlike.user.toString())
+        .indexOf(req.user.id);
 
       item.unlikes.splice(removeIndex, 1);
 
+      item.likes.unshift({ user: req.user.id });
+
+      req.flash('success_msg', 'Item liked!');
       await item.save();
-    }
 
-    // CHECK IF ITEM HAVE ALREADY BEEN LIKED
-    if (item.likes.filter(like => like.user === req.user._id).length > 0) {
-      req.flash('error_msg', 'Item has already been liked!');
       res.redirect('/items');
+    } else {
+      // CHECK IF ITEM HAVE ALREADY BEEN LIKED
+      if (
+        item.likes.filter(like => like.user.toString() === req.user.id).length >
+        0
+      ) {
+        req.flash('error_msg', 'Item has already been liked!');
+        res.redirect('/items');
+      } else {
+        item.likes.unshift({ user: req.user.id });
+
+        await item.save();
+
+        req.flash('success_msg', 'Item liked!');
+        res.redirect('/items');
+      }
     }
-
-    item.likes.unshift({ user: req.user._id });
-
-    await item.save();
-
-    req.flash('success_msg', 'Item liked!');
-    res.redirect('/items');
   } catch (error) {
     console.log(error.message);
     return res.status(500).render('error', { title: 'Server Error!' });
@@ -167,7 +179,7 @@ router.get('/like/:id', async (req, res, next) => {
 //  @ROUTE              >    GET  /items/unlike/:id
 //  @DESC               >    UNLIKE ITEM
 //  @ACCESS CONTROL     >    PRIVATE
-router.get('/unlike/:id', async (req, res, next) => {
+router.get('/unlike/:id', isAuth, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -177,31 +189,42 @@ router.get('/unlike/:id', async (req, res, next) => {
       return res.status(400).render('item', { error_msg: 'Item not found!' });
 
     // CHECK IF ITEM HAVE ALREADY BEEN LIKED
-    if (item.likes.filter(like => like.user === req.user._id).length > 0) {
+    if (
+      item.likes.filter(like => like.user.toString() === req.user.id).length >
+        0 &&
+      item.unlikes.filter(unlike => unlike.user.toString() === req.user.id)
+        .length < 1
+    ) {
       // FIND REMOVEINDEX
       const removeIndex = item.likes
-        .map(like => like.user)
-        .indexOf(req.user._id);
+        .map(like => like.user.toString())
+        .indexOf(req.user.id);
 
       item.likes.splice(removeIndex, 1);
 
+      item.unlikes.unshift({ user: req.user.id });
+
       await item.save();
-    }
 
-    // CHECK IF ITEM HAVE ALREADY BEEN LIKED
-    if (
-      item.unlikes.filter(unlike => unlike.user === req.user._id).length > 0
-    ) {
-      req.flash('error_msg', 'Item has already been unliked!');
+      req.flash('success_msg', 'Item unliked!');
       res.redirect('/items');
+    } else {
+      // CHECK IF ITEM HAVE ALREADY BEEN LIKED
+      if (
+        item.unlikes.filter(unlike => unlike.user.toString() === req.user.id)
+          .length > 0
+      ) {
+        req.flash('error_msg', 'Item has already been unliked!');
+        res.redirect('/items');
+      } else {
+        item.unlikes.unshift({ user: req.user.id });
+
+        await item.save();
+
+        req.flash('success_msg', 'Item unliked!');
+        res.redirect('/items');
+      }
     }
-
-    item.unlikes.unshift({ user: req.user._id });
-
-    await item.save();
-
-    req.flash('success_msg', 'Item unliked!');
-    res.redirect('/items');
   } catch (error) {
     console.log(error.message);
     return res.status(500).render('error', { title: 'Server Error!' });
@@ -211,7 +234,7 @@ router.get('/unlike/:id', async (req, res, next) => {
 //  @ROUTE              >    GET  /items/cart/add
 //  @DESC               >    ADD ITEM TO CART
 //  @ACCESS CONTROL     >    PRIVATE
-router.get('/cart/add/:id', async (req, res, next) => {
+router.get('/cart/add/:id', isAuth, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -243,18 +266,16 @@ router.get('/cart/add/:id', async (req, res, next) => {
 //  @ROUTE              >    GET  /items/cart
 //  @DESC               >    GET ITEM BY USER
 //  @ACCESS CONTROL     >    PRIVATE
-router.get('/cart', async (req, res, next) => {
-  const { _id } = req.user;
-
+router.get('/cart', isAuth, async (req, res, next) => {
   try {
-    const user = await User.findById(_id)
+    const user = await User.findById(req.user.id)
       .populate('items')
       .exec();
 
     if (user.items.length < 1)
       return res.status(409).render('cart', {
         title: 'Cart Items Not Found',
-        error_msg: 'Item not found!',
+        error_msg: 'Item not found!'
       });
 
     return res.status(200).render('cart', { title: 'Cart', items: user.items });
@@ -267,6 +288,6 @@ router.get('/cart', async (req, res, next) => {
 //  @ROUTE              >    DELELE  /items/cart/:id
 //  @DESC               >    DELETE ITEM BY USER
 //  @ACCESS CONTROL     >    PRIVATE
-router.delete('/cart/:id', (req, res, next) => {});
+router.delete('/cart/:id', isAuth, (req, res, next) => {});
 
 export default router;

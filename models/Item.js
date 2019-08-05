@@ -1,10 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 const itemSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId,
-  },
-
   users: [
     {
       user: {

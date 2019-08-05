@@ -32,4 +32,13 @@ router.get('/user', (req, res, next) => {
   }
 });
 
+// @ROUTE           >       GET   /user/logout
+// @DESC            >       LOGOUT USER
+// @ACCESS CONTROL  >       PRIVATE
+router.get('/logout', (req, res, next) => {
+  req.logOut();
+  req.flash('success_msg', 'You are logged out!');
+  res.redirect('/user/login');
+});
+
 export default router;

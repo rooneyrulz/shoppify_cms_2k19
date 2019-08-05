@@ -16,11 +16,17 @@
             <h5 class="card-title">{{name}}</h5>
             <p class="card-text lead">$ {{price}}</p>
             <div class="btn-like">
-              <a href="#!" class="btn btn-outline-info m-2">
+              <a href="/items/like/{{_id}}" class="btn btn-outline-info m-2">
                 <i class="far fa-thumbs-up"></i>
+                {{#if likes.length}}
+                  <span class="like-count">{{likes.length}}</span>
+                {{/if}}
               </a>
-              <a href="#!" class="btn btn-outline-secondary m-2">
+              <a href="/items/unlike/{{_id}}" class="btn btn-outline-secondary m-2">
                 <i class="far fa-thumbs-down"></i>
+                {{#if unlikes.length}}
+                  <span class="like-count">{{unlikes.length}}</span>
+                {{/if}}
               </a>
             </div>
           </div>

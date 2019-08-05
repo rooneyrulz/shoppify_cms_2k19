@@ -1,10 +1,6 @@
 import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId,
-  },
-
   name: {
     type: String,
     required: [true, 'Please enter user name..'],
