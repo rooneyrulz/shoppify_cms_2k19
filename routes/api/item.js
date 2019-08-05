@@ -238,25 +238,30 @@ router.get('/cart/add/:id', isAuth, async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const user = await User.findById(req.user._id).exec();
+    const user = await User.findById(req.user.id).exec();
     const item = await Item.findById(id).exec();
 
+    if (!item) {
+      req.flash('error_msg', 'Item not found!');
+      res.redirect('/items');
+    }
+
     if (
-      user.items.filter(itm => itm.item === id).length < 1 &&
-      item.users.filter(usr => usr.user === req.user._id).length < 1
+      user.items.filter(itm => itm.item.toString() === id).length < 1 &&
+      item.users.filter(usr => usr.user.toString() === req.user.id).length < 1
     ) {
       user.items.unshift({ item: id });
-      item.users.unshift({ user: req.user._id });
+      item.users.unshift({ user: req.user.id });
 
       await user.save();
       await item.save();
 
       req.flash('success_msg', 'Item added!');
-      res.redirect('/cart');
+      res.redirect('/items/cart');
+    } else {
+      req.flash('error_msg', 'Item has already been added!');
+      res.redirect('/items');
     }
-
-    req.flash('error_msg', 'Item has already been added!');
-    res.redirect('/items');
   } catch (error) {
     console.log(error.message);
     return res.status(500).render('error', { title: 'Server Error!' });
