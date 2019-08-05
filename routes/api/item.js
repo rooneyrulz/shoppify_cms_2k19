@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
 import { check, validationResult } from 'express-validator';
 
 // IMPORT MODELS
@@ -58,7 +57,7 @@ router.post(
       .isEmpty(),
     check('provider', 'Please enter provider!')
       .not()
-      .isEmpty()
+      .isEmpty(),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -71,7 +70,7 @@ router.post(
     if (!req.file)
       return res.status(400).render('item/addItem', {
         title: 'Add Items',
-        error_msg: 'Choose an image!'
+        error_msg: 'Choose an image!',
       });
 
     const { name, price, provider } = req.body;
@@ -81,7 +80,7 @@ router.post(
         name,
         price,
         provider,
-        image: req.file.path
+        image: req.file.path,
       });
 
       await item.save();
@@ -107,9 +106,9 @@ router.get('/:id', async (req, res, next) => {
     if (!item)
       return res.status(400).render('item/item', {
         title: 'Item Not Found',
-        error_msg: 'Item not found!'
+        error_msg: 'Item not found!',
       });
-
+    console.log(item);
     return res.status(200).render('item/item', { title: 'Item', item });
   } catch (error) {
     console.log(error.message);
@@ -277,15 +276,17 @@ router.get('/cart', isAuth, async (req, res, next) => {
       .populate('items')
       .exec();
 
+    console.log(user);
+
     if (user.items.length < 1)
       return res.status(409).render('cart', {
         title: 'Cart Items Not Found',
-        error_msg: 'Item not found!'
+        error_msg: 'Item not found!',
       });
 
     return res.status(200).render('cart', { title: 'Cart', items: user.items });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     return res.status(500).render('error', { title: 'Server Error!' });
   }
 });
