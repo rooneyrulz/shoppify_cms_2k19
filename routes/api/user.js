@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { hash } from 'bcryptjs';
 import { check, validationResult } from 'express-validator';
-import mongoose from 'mongoose';
 
 // IMPORT MODELS
 import User from '../../models/User';

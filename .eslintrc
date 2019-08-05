@@ -1,3 +1,6 @@
 {
-  "extends": ["wesbos"]
+  "extends": ["wesbos"],
+  "rules": {
+    "no-lonely-if": 0
+  }
 }

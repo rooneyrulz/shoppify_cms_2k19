@@ -21,17 +21,6 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-// @ROUTE           >       GET   /user/auth/user
-// @DESC            >       GET AUTH USER
-// @ACCESS CONTROL  >       PRIVATE
-router.get('/user', (req, res, next) => {
-  try {
-    //
-  } catch (error) {
-    //
-  }
-});
-
 // @ROUTE           >       GET   /user/logout
 // @DESC            >       LOGOUT USER
 // @ACCESS CONTROL  >       PRIVATE

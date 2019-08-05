@@ -10,7 +10,7 @@ const router = Router({ strict: true });
 // @ACCESS CONTROL  >       PRIVATE
 router.get('/', isAuth, (req, res, next) => {
   console.log(req.user);
-  res.status(200).render('dashboard', { title: 'Dashboard' });
+  res.status(200).render('dashboard', { title: 'Dashboard', user: req.user });
 });
 
 export default router;

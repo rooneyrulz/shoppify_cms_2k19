@@ -17,7 +17,7 @@
 .item-name {
   text-align: center;
   width: 100%;
-  background: steelblue;
+  background: rgb(74, 112, 143);
   color: #f4f4f4;
   border: 1px #333 solid;
   padding: 3rem;
@@ -28,6 +28,7 @@
   width: 100%;
   background: steelblue;
   color: #f4f4f4;
+  background: rgb(74, 112, 143);
   border: 1px #333 solid;
   padding: 3rem;
   margin: 1rem auto;
