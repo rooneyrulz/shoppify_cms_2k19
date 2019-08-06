@@ -1,12 +1,13 @@
 import express from 'express';
 import { createServer } from 'http';
 import exphbs from 'express-handlebars';
-import flash from 'connect-flash';
 import session from 'express-session';
+import flash from 'connect-flash';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import logger from 'morgan';
 import path from 'path';
+import { config } from 'dotenv';
 
 // IMPORT MONGO CONNECTION
 import dbConnection from './config/database';
@@ -20,9 +21,12 @@ import dashboard from './routes/api/dashboard';
 import register from './routes/api/user';
 import auth from './routes/api/auth';
 import item from './routes/api/item';
+import cart from './routes/api/cart';
 
 const app = express();
 const server = createServer(app);
+
+config();
 
 mongoose.Promise = global.Promise;
 
@@ -80,7 +84,8 @@ app.use('/dashboard', dashboard);
 app.use('/user', register);
 app.use('/user', auth);
 app.use('/items', item);
+app.use('/cart', cart);
 
 server.listen(process.env.PORT || 5000, () =>
-  console.log(`server running on port ${process.env.PORT || 5000}`)
+  console.log(`server running on port ${process.env.PORT || 5000}...`)
 );

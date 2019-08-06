@@ -3,7 +3,6 @@ import { check, validationResult } from 'express-validator';
 
 // IMPORT MODELS
 import Item from '../../models/Item';
-import User from '../../models/User';
 
 // IMPORT FILE UPLOAD
 import upload from '../../utils/upload';
@@ -231,71 +230,5 @@ router.get('/unlike/:id', isAuth, async (req, res, next) => {
     return res.status(500).render('error', { title: 'Server Error!' });
   }
 });
-
-//  @ROUTE              >    GET  /items/cart/add
-//  @DESC               >    ADD ITEM TO CART
-//  @ACCESS CONTROL     >    PRIVATE
-router.get('/cart/add/:id', isAuth, async (req, res, next) => {
-  const { id } = req.params;
-
-  try {
-    const user = await User.findById(req.user.id).exec();
-    const item = await Item.findById(id).exec();
-
-    if (!item) {
-      req.flash('error_msg', 'Item not found!');
-      res.redirect('/items');
-    }
-
-    if (
-      user.items.filter(itm => itm.item.toString() === id).length < 1 &&
-      item.users.filter(usr => usr.user.toString() === req.user.id).length < 1
-    ) {
-      user.items.unshift({ item: id });
-      item.users.unshift({ user: req.user.id });
-
-      await user.save();
-      await item.save();
-
-      req.flash('success_msg', 'Item added!');
-      res.redirect('/items/cart');
-    } else {
-      req.flash('error_msg', 'Item has already been added!');
-      res.redirect('/items');
-    }
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).render('error', { title: 'Server Error!' });
-  }
-});
-
-//  @ROUTE              >    GET  /items/cart
-//  @DESC               >    GET ITEM BY USER
-//  @ACCESS CONTROL     >    PRIVATE
-router.get('/cart', isAuth, async (req, res, next) => {
-  try {
-    const user = await User.findById(req.user.id)
-      .populate('items')
-      .exec();
-
-    console.log(user);
-
-    if (user.items.length < 1)
-      return res.status(409).render('cart', {
-        title: 'Cart Items Not Found',
-        error_msg: 'Item not found!',
-      });
-
-    return res.status(200).render('cart', { title: 'Cart', items: user.items });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).render('error', { title: 'Server Error!' });
-  }
-});
-
-//  @ROUTE              >    DELELE  /items/cart/:id
-//  @DESC               >    DELETE ITEM BY USER
-//  @ACCESS CONTROL     >    PRIVATE
-router.delete('/cart/:id', isAuth, (req, res, next) => {});
 
 export default router;
