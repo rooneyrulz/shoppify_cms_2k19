@@ -50,21 +50,24 @@ router.get('/add/:id', isAuth, async (req, res, next) => {
 //  @DESC               >    GET ITEM BY USER
 //  @ACCESS CONTROL     >    PRIVATE
 router.get('/', isAuth, async (req, res, next) => {
+  const items = [];
   try {
     const user = await User.findById(req.user.id)
       .select('items')
       .populate('items.item')
       .exec();
 
-    console.log(user);
-
     if (user.items.length < 1)
       return res.status(409).render('cart', {
-        title: 'Cart Items Not Found',
+        title: 'Cart',
         error_msg: 'It seems you have not added any items in your cart!',
       });
 
-    return res.status(200).render('cart', { title: 'Cart', items: user.items });
+    for (let i = 0; i < user.items.length; i++) {
+      items.unshift(user.items[i]);
+    }
+
+    return res.status(200).render('cart', { title: 'Cart', items });
   } catch (error) {
     console.log(error);
     return res.status(500).render('error', { title: 'Server Error!' });
