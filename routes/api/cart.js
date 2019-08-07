@@ -35,7 +35,7 @@ router.get('/add/:id', isAuth, async (req, res, next) => {
       await item.save();
 
       req.flash('success_msg', 'Item added!');
-      res.redirect('/items/cart');
+      res.redirect('/items');
     } else {
       req.flash('error_msg', 'Item has already been added!');
       res.redirect('/items');
@@ -72,8 +72,28 @@ router.get('/', isAuth, async (req, res, next) => {
 });
 
 //  @ROUTE              >    DELELE  /cart/:id
-//  @DESC               >    DELETE ITEM BY USER
+//  @DESC               >    DELETE CART ITEM
 //  @ACCESS CONTROL     >    PRIVATE
-router.delete('/:id', isAuth, (req, res, next) => {});
+router.delete('/:id', isAuth, async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const item = await Item.findById(id).exec();
+
+    if (!item) return res.status(400).render('error', { title: 'Cart' });
+
+    if (
+      item.users.filter(usr => usr.user.toString() === req.user.id).length === 0
+    ) {
+      req.flash('error_msg', 'Invalid request!');
+      res.redirect('/cart');
+    } else {
+      //
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).render('error', { title: 'Server Error!' });
+  }
+});
 
 export default router;

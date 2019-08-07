@@ -1,7 +1,7 @@
 .items-header {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: space-between !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .btn-like {

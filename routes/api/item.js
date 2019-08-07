@@ -85,7 +85,7 @@ router.post(
       await item.save();
 
       req.flash('success_msg', 'Item added!');
-      res.redirect('/items');
+      res.redirect('/items/add');
     } catch (error) {
       console.log(error.message);
       return res.status(500).render('error', { title: 'Server Error!' });

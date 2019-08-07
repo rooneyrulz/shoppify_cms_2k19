@@ -1,3 +1,3 @@
 {
-  "MONGO_URI": "mongodb://localhost:27017/cms_2k19"
+  "MONGO_URI": "mongodb://localhost:27017/shoppify_cms_2k19"
 }

@@ -1,19 +1,28 @@
 <div class="row">
   {{#if success_msg}}
     <div class="col col-sm-12">
-      <div class="alert alert-success">{{ success_msg }}</div>
+      <div class="alert alert-success">
+        {{ success_msg }}
+        <span class="close alert-close">&times;</span>
+      </div>
     </div>
   {{/if}}
 
   {{#if error_msg}}
     <div class="col col-sm-12">
-      <div class="alert alert-danger">{{ error_msg }}</div>
+      <div class="alert alert-danger">
+        {{ error_msg }}
+        <span class="close alert-close">&times;</span>
+      </div>
     </div>
   {{/if}}
 
   {{#if error}}
     <div class="col col-sm-12">
-      <div class="alert alert-danger">{{ error }}</div>
+      <div class="alert alert-danger">
+        {{ error }}
+        <span class="close alert-close">&times;</span>
+      </div>
     </div>
   {{/if}}
 </div>

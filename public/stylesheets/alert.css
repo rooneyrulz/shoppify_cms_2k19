@@ -1,0 +1,11 @@
+.alert-danger {
+  border: 1px #b3303d solid;
+}
+
+.alert-success {
+  border: 1px #1c702f solid;
+}
+
+.alert-close {
+  cursor: pointer;
+}
