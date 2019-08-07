@@ -83,16 +83,52 @@ router.delete('/:id', isAuth, async (req, res, next) => {
   try {
     const item = await Item.findById(id).exec();
 
-    if (!item) return res.status(400).render('error', { title: 'Cart' });
+    if (!item)
+      return res
+        .status(400)
+        .render('cart', { title: 'Cart', error_msg: 'Item not found!' });
 
     if (
-      item.users.filter(usr => usr.user.toString() === req.user.id).length === 0
-    ) {
-      req.flash('error_msg', 'Invalid request!');
-      res.redirect('/cart');
-    } else {
-      //
-    }
+      item.users.filter(usr => usr.user.toString() === req.user.id).length < 1
+    )
+      return res.status(400).render('cart', {
+        title: 'Cart',
+        error_msg: 'Invalid request!',
+      });
+
+    const user = await User.findById(req.user.id).exec();
+
+    if (!user)
+      return res
+        .status(400)
+        .render('cart', { title: 'Cart', error_msg: 'Unauthorized!' });
+
+    if (user.items.filter(itm => itm.item.toString() === id).length < 1)
+      return res.status(400).render('cart', {
+        title: 'Cart',
+        error_msg: 'Invalid request!',
+      });
+
+    // FIND REMOVE INDEX FROM ITEM
+    const removeIndexFromItem = item.users
+      .map(usr => usr.user.toString())
+      .indexOf(req.user.id);
+
+    item.users.splice(removeIndexFromItem, 1);
+
+    await item.save();
+
+    // FIND REMOVE INDEX FROM USER
+    const removeIndexFromUser = user.items
+      .map(itm => itm.item.toString())
+      .indexOf(id);
+
+    user.items.splice(removeIndexFromUser, 1);
+
+    await user.save();
+
+    req.flash('success_msg', 'Item removed!');
+    res.redirect('/cart');
   } catch (error) {
     console.log(error);
     return res.status(500).render('error', { title: 'Server Error!' });

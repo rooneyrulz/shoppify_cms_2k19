@@ -8,7 +8,7 @@
         <div class="card-body">
           <h5 class="card-title">{{item.name}}</h5>
           <p class="card-text lead">$ {{item.price}}</p>
-          <a href="/cart/{{_id}}/{{item._id}}" class="btn btn-danger">Remove</a>
+          <button item-Id="{{item._id}}" class="btn btn-danger btn-del">Remove</button>
         </div>
       </div>
     </div>
