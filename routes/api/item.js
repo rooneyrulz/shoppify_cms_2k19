@@ -100,16 +100,13 @@ router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const item = await Item.findById(id)
-      .populate('users')
-      .exec();
+    const item = await Item.findById(id).exec();
 
     if (!item)
       return res.status(400).render('item/item', {
         title: 'Item Not Found',
         error_msg: 'Item not found!',
       });
-    console.log(item);
     return res.status(200).render('item/item', { title: 'Item', item });
   } catch (error) {
     console.log(error.message);

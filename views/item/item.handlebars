@@ -18,23 +18,5 @@
       <h1 class="display-4"><i class="far fa-thumbs-down fa-2x"></i></h1>
       <h1 class="display-4">{{item.unlikes.length}}</h1>
     </div>
-    <button class="btn btn-dark btn-lg" type="button" data-toggle="collapse"  data-target="#collapseExample" aria-expanded="false"  aria-controls="collapseExample">
-    View Users
-    </button>
-    <div class="collapse mt-3" id="collapseExample">
-      <div class="card card-body">
-        {{#if item.users.length}}
-          <ul class="list-group">
-            {{#each item.users}}
-              <li class="list-group-item">
-                {{name}}
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <p class="lead">No users found...</p>
-        {{/if}}
-      </div>
-    </div>
   </div>
 </div>

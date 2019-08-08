@@ -84,6 +84,10 @@ app.use('/user', auth);
 app.use('/items', item);
 app.use('/cart', cart);
 
+app.use((req, res, next) =>
+  res.status(404).render('error', { title: 'Page Not Found!', status: 404 })
+);
+
 server.listen(process.env.PORT || 5000, () =>
   console.log(`server running on port ${process.env.PORT || 5000}...`)
 );

@@ -32,8 +32,14 @@
           </a>
         </li>
         {{#if user}}
-        <li class="nav-item">
-          <a class="nav-link px-lg-3" href="/user/logout">Sign Out</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle px-lg-3" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>
+            User Management
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownId">
+            <a class="dropdown-item px-lg-3" href="/user/logout">Sign Out</a>
+          </div>
         </li>
         {{else}}
         <li class="nav-item dropdown">
