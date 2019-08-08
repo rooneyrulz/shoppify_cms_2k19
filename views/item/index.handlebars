@@ -20,13 +20,13 @@
             <p class="card-text lead">$ {{price}}</p>
             <div class="btn-like">
               <a href="/items/like/{{_id}}" class="btn btn-outline-info m-2">
-                <i class="far fa-thumbs-up"></i>
+                <i class="fas fa-thumbs-up"></i>
                 {{#if likes.length}}
                   <span class="like-count">{{likes.length}}</span>
                 {{/if}}
               </a>
               <a href="/items/unlike/{{_id}}" class="btn btn-outline-secondary m-2">
-                <i class="far fa-thumbs-down"></i>
+                <i class="fas fa-thumbs-down"></i>
                 {{#if unlikes.length}}
                   <span class="like-count">{{unlikes.length}}</span>
                 {{/if}}
@@ -35,10 +35,12 @@
           </div>
           <div class="card-footer">
             <a href="/cart/add/{{_id}}" class="btn btn-success">
-              Add <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-plus"></i>
+              Add
             </a>
             <a href="/items/{{_id}}" class="btn btn-primary">
-              Explore <i class="fas fa-chevron-right"></i>
+              <i class="fas fa-search-plus"></i>
+              Explore
             </a>
           </div>
         </div>
