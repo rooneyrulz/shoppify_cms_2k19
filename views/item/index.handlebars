@@ -1,19 +1,20 @@
-<div class="items">
-  <div class="row mb-4">
-    <div class="col-sm-12">
-      <h1 class="display-4">{{ title }}</h1>
+<div class="items mt-3">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-sm-12">
+        <h1 class="display-4">{{ title }}</h1>
+      </div>
     </div>
-  </div>
-  <div class="row mb-4">
-    <div class="col-sm-12">
-      <input class="form-control border-0" type="search" placeholder="Start Searching Items..." aria-label="Search">
+    <div class="row mb-4">
+      <div class="col-sm-12">
+        <input class="form-control border-0" type="search" placeholder="Start Searching Items..." aria-label="Search">
+      </div>
     </div>
-  </div>
-  {{#if items}}
+    {{#if items}}
     <div class="row">
       {{#each items}}
-        <div class="col col-sm-12 col-md-6 col-lg-4 mb-5">
-          <div class="card" style="width: 18rem;">
+      <div class="col col-sm-12 col-md-6 col-lg-4 mb-5">
+        <div class="card" style="width: 18rem;">
           <img class="card-img-top" src="{{image}}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{name}}</h5>
@@ -22,13 +23,13 @@
               <a href="/items/like/{{_id}}" class="btn btn-outline-info m-2">
                 <i class="fas fa-thumbs-up"></i>
                 {{#if likes.length}}
-                  <span class="like-count">{{likes.length}}</span>
+                <span class="like-count">{{likes.length}}</span>
                 {{/if}}
               </a>
               <a href="/items/unlike/{{_id}}" class="btn btn-outline-secondary m-2">
                 <i class="fas fa-thumbs-down"></i>
                 {{#if unlikes.length}}
-                  <span class="like-count">{{unlikes.length}}</span>
+                <span class="like-count">{{unlikes.length}}</span>
                 {{/if}}
               </a>
             </div>
@@ -44,8 +45,9 @@
             </a>
           </div>
         </div>
-        </div>
+      </div>
       {{/each}}
     </div>
-  {{/if}}
+    {{/if}}
+  </div>
 </div>

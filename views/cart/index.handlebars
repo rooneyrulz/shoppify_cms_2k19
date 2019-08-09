@@ -1,20 +1,22 @@
-<div class="cart">
-  <h1 class="display-4 mb-5">{{ title }}</h1>
-  <div class="row">
-    {{#each items}}
-    <div class="col col-sm-12 col-md-6 col-lg-4 mb-5">
-      <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{item.image}}" alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">{{item.name}}</h5>
-          <p class="card-text lead">$ {{item.price}}</p>
-          <button item-Id="{{item._id}}" class="btn btn-danger btn-del">
-            <i class="fas fa-trash"></i>
-            Remove
-          </button>
+<div class="cart mt-3">
+  <div class="container">
+    <h1 class="display-4 mb-5">{{ title }}</h1>
+    <div class="row">
+      {{#each items}}
+      <div class="col col-sm-12 col-md-6 col-lg-4 mb-5">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="{{item.image}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text lead">$ {{item.price}}</p>
+            <button item-Id="{{item._id}}" class="btn btn-danger btn-del">
+              <i class="fas fa-trash"></i>
+              Remove
+            </button>
+          </div>
         </div>
       </div>
+      {{/each}}
     </div>
-  {{/each}}
   </div>
 </div>

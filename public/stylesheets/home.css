@@ -1,0 +1,54 @@
+.home {
+  position: relative;
+  height: 86vh;
+  background-image: url('/images/home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home-overlay {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #6d7586;
+  opacity: .65;
+}
+
+.home-container {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+}
+
+.home-content {
+  z-index: 100;
+  color: #fff;
+}
+
+.home-content .btn {
+  padding: 1rem 2.5rem;
+  color: #fff;
+  outline: none;
+}
+
+.btn-signup {
+  background: rgb(236, 125, 84);
+  border: 1px #fff solid;
+}
+
+.btn-signup:hover {
+  background: rgb(207, 96, 56);
+}
+
+.btn-signin {
+  border: 1px #fff solid;
+}
+
+.btn-signin:hover {
+  background: rgb(66, 66, 66);
+}

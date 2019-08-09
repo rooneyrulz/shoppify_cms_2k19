@@ -33,7 +33,7 @@ mongoose.Promise = global.Promise;
 // EXECUTE MONGO CONNECTION
 dbConnection();
 
-app.use(logger('dev'));
+if (process.env.NODE_ENV === 'development') app.use(logger('dev'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');

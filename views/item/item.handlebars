@@ -1,22 +1,24 @@
-<div class="item">
-  <img class="item-img" src="{{item.image}}" alt="">
-  <h1 class="display-4 item-name">{{ item.name }}</h1>
-  <div class="item-details">
-    <div class="item-box">
-      <h1 class="display-4">Price</h1>
-      <h1 class="display-4">$ {{item.price}}</h1>
-    </div>
-    <div class="item-box">
-      <h1 class="display-4">Provider</h1>
-      <h1 class="display-4">{{item.provider}}</h1>
-    </div>
-    <div class="item-box">
-      <h1 class="display-4"><i class="far fa-thumbs-up fa-2x"></i></h1>
-      <h1 class="display-4">{{item.likes.length}}</h1>
-    </div>
-    <div class="item-box">
-      <h1 class="display-4"><i class="far fa-thumbs-down fa-2x"></i></h1>
-      <h1 class="display-4">{{item.unlikes.length}}</h1>
+<div class="item mt-3">
+  <div class="container">
+    <img class="item-img" src="{{item.image}}" alt="">
+    <h1 class="display-4 item-name">{{ item.name }}</h1>
+    <div class="item-details">
+      <div class="item-box">
+        <h1 class="display-4">Price</h1>
+        <h1 class="display-4">$ {{item.price}}</h1>
+      </div>
+      <div class="item-box">
+        <h1 class="display-4">Provider</h1>
+        <h1 class="display-4">{{item.provider}}</h1>
+      </div>
+      <div class="item-box">
+        <h1 class="display-4"><i class="far fa-thumbs-up fa-2x"></i></h1>
+        <h1 class="display-4">{{item.likes.length}}</h1>
+      </div>
+      <div class="item-box">
+        <h1 class="display-4"><i class="far fa-thumbs-down fa-2x"></i></h1>
+        <h1 class="display-4">{{item.unlikes.length}}</h1>
+      </div>
     </div>
   </div>
 </div>
