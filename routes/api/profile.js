@@ -43,9 +43,10 @@ router.get('/', async (req, res, next) => {
       .exec();
 
     if (profiles.length < 1)
-      return res
-        .status(409)
-        .render('profile/profiles', { title: 'Profiles not found!' });
+      return res.status(409).render('profile/profiles', {
+        title: 'Profiles',
+        error_msg: 'Profiles not found!',
+      });
 
     return res
       .status(200)
@@ -69,9 +70,10 @@ router.get('/:id', async (req, res, next) => {
       .exec();
 
     if (!profile)
-      return res
-        .status(409)
-        .render('profile/profile', { title: 'Profile not found!' });
+      return res.status(409).render('profile/profile', {
+        title: 'Profile',
+        error_msg: 'Profile not found!',
+      });
 
     if (profile.user.toString() === req.user.id)
       return res.status(200).render('profile/profile_me', {});
@@ -211,9 +213,10 @@ router.get('/me', isAuth, async (req, res, next) => {
       .exec();
 
     if (!profile)
-      return res
-        .status(400)
-        .render('profile/profile_me', { title: 'Profile not found!' });
+      return res.status(400).render('profile/profile_me', {
+        title: 'Profile',
+        error_msg: 'Profile not found!',
+      });
 
     return res
       .status(200)
