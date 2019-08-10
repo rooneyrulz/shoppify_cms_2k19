@@ -33,7 +33,29 @@ router.get('/create', isAuth, async (req, res, next) => {
   }
 });
 
-//  @ROUTE              >    POST  /user/profile/create
+//  @ROUTE              >    GET  /user/profiles
+//  @DESC               >    GET ALL PROFILES
+//  @ACCESS CONTROL     >    PUBLIC
+router.get('/', async (req, res, next) => {
+  try {
+    const profiles = await Profile.find()
+      .populate('user')
+      .exec();
+
+    if (profiles.length < 1)
+      return res
+        .status(409)
+        .render('profile/profiles', { title: 'Profiles not found!' });
+
+    console.log(profiles);
+  } catch (error) {
+    console.log(error);
+    req.flash('error', 'Something went wrong!');
+    res.redirect('/user/profiles');
+  }
+});
+
+//  @ROUTE              >    POST  /user/profiles/create
 //  @DESC               >    CREATE PROFILE
 //  @ACCESS CONTROL     >    PRIVATE
 router.post(
