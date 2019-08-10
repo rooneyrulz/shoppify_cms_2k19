@@ -47,11 +47,42 @@ router.get('/', async (req, res, next) => {
         .status(409)
         .render('profile/profiles', { title: 'Profiles not found!' });
 
-    console.log(profiles);
+    return res
+      .status(200)
+      .render('profile/profiles', { title: 'Profiles', profiles });
   } catch (error) {
     console.log(error);
     req.flash('error', 'Something went wrong!');
     res.redirect('/user/profiles');
+  }
+});
+
+//  @ROUTE              >    GET  /user/profiles
+//  @DESC               >    GET PROFILE BY USER
+//  @ACCESS CONTROL     >    PUBLIC
+router.get('/:id', async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const profile = await Profile.findById(id)
+      .populate('user')
+      .exec();
+
+    if (!profile)
+      return res
+        .status(409)
+        .render('profile/profile', { title: 'Profile not found!' });
+
+    if (profile.user.toString() === req.user.id)
+      return res.status(200).render('profile/profile_me', {});
+
+    return res
+      .status(200)
+      .render('profile/profile', { title: 'Profile', profile });
+  } catch (error) {
+    console.log(error);
+    req.flash('error', 'Something went wrong!');
+    res.redirect('/user/profile');
   }
 });
 
@@ -167,5 +198,31 @@ router.post(
     }
   }
 );
+
+//  @ROUTE              >    GET  /user/profiles/me
+//  @DESC               >    GET PROFILE BY CURRENT USER
+//  @ACCESS CONTROL     >    PRIVATE
+router.get('/me', isAuth, async (req, res, next) => {
+  const { id } = req.user;
+
+  try {
+    const profile = await Profile.findOne({ user: id })
+      .populate('user')
+      .exec();
+
+    if (!profile)
+      return res
+        .status(400)
+        .render('profile/profile_me', { title: 'Profile not found!' });
+
+    return res
+      .status(200)
+      .render('profile/profile_me', { title: 'Profile', profile });
+  } catch (error) {
+    console.log(error);
+    req.flash('error', 'Something went wrong!');
+    res.redirect('/user/profiles/me');
+  }
+});
 
 export default router;
