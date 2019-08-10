@@ -22,6 +22,7 @@ import register from './routes/api/user';
 import auth from './routes/api/auth';
 import item from './routes/api/item';
 import cart from './routes/api/cart';
+import profile from './routes/api/profile';
 
 const app = express();
 const server = createServer(app);
@@ -83,6 +84,7 @@ app.use('/user', register);
 app.use('/user', auth);
 app.use('/items', item);
 app.use('/cart', cart);
+app.use('/user/profiles', profile);
 
 app.use((req, res, next) =>
   res.status(404).render('error', { title: 'Page Not Found!', status: 404 })

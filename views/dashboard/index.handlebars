@@ -4,10 +4,20 @@
       <div class="dashboard-content">
       <h1 class="display-3">{{ title }}</h1>
       <br>
-      <p class="lead">Welcome {{user.name}}, <br> It seems you have not setup your profile yet, Let's create one..</p>
+      <p class="lead">Welcome {{user.name}},
+      {{#if profile}}
+      <span></span>
+      {{else}}
+      <span>It seems you have not setup your profile yet, Let's create one..</span>
+      {{/if}}
+      </p>
       <br>
-      <a class="btn btn-dashboard btn-lg" href="/items" role="button">Get Started</a>
-      <a class="btn btn-create-profile btn-lg" href="/user/profile/create" role="button">Create Profile</a>
+      <a class="btn btn-dashboard btn-lg" href="/items" role="button">Start Parchasing</a>
+      {{#if profile}}
+        <a class="btn btn-add-item btn-lg" href="/items/add" role="button">Start Selling</a>
+      {{else}}
+        <a class="btn btn-create-profile btn-lg" href="/user/profiles/create" role="button">Create Profile</a>
+      {{/if}}
     </div>
   </div>
 </div>
