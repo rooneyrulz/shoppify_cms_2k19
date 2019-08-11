@@ -1,5 +1,24 @@
-<div class="profiles">
+<div class="profiles my-5">
   <div class="container">
-    <h1 class="display-4">Profiles</h1>
+    <h1 class="display-4 mb-5">Profiles</h1>
+    {{#each profiles}}
+    <div class="card mb-3 profiles-card">
+      <div class="row">
+        <div class="col-lg-4">
+          <img src="{{avatar}}" class="rounded" alt="...">
+        </div>
+        <div class="col-lg-8">
+          <div class="card-body">
+            <div>
+              <h5 class="card-title">{{user.name}}</h5>
+              <p class="lead">{{location}}</p>
+              <p class="card-text"><small class="text-muted">{{date}}</small></p>
+            </div>
+            <a class="btn btn-primary" href="#!">View Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
   </div>
 </div>

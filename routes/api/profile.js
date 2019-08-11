@@ -187,7 +187,7 @@ router.post(
 
       await profile.save();
 
-      user.profile = profile.id;
+      user.profile = profile._id;
 
       await user.save();
 

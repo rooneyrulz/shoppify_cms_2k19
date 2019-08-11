@@ -1,0 +1,18 @@
+.profiles-card {
+  height: 200px;
+}
+
+.profiles-card img {
+  height: 200px;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.profiles-card .card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
