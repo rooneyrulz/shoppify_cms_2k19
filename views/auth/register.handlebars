@@ -1,8 +1,12 @@
-<div class="register mt-3">
+<div class="register my-5">
   {{#each errors}}
-    <div class="alert alert-danger">
-      {{msg}}
-      <span class="close alert-close">&times;</span>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="alert alert-danger">
+        {{msg}}
+        <span class="close alert-close">&times;</span>
+        </div>
+      </div>
     </div>
   {{/each}}
   <h1 class="display-4 text-center mb-5">{{ title }}</h1>
