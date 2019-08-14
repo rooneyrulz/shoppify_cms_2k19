@@ -58,10 +58,10 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-//  @ROUTE              >    GET  /user/profiles
+//  @ROUTE              >    GET  /user/profiles/:id
 //  @DESC               >    GET PROFILE BY USER
 //  @ACCESS CONTROL     >    PUBLIC
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', isAuth, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -76,7 +76,7 @@ router.get('/:id', async (req, res, next) => {
       });
 
     if (profile.user.toString() === req.user.id)
-      return res.status(200).render('profile/profile_me', {});
+      return res.redirect('/user/profiles/me');
 
     return res
       .status(200)
@@ -84,7 +84,7 @@ router.get('/:id', async (req, res, next) => {
   } catch (error) {
     console.log(error);
     req.flash('error', 'Something went wrong!');
-    res.redirect('/user/profile');
+    res.redirect('/user/profiles');
   }
 });
 
