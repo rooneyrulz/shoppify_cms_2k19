@@ -1,8 +1,8 @@
 <div class="messages-container">
   {{#if success_msg}}
-  <div class="row mt-5">
+  <div class="row">
     <div class="col col-sm-12">
-      <div class="alert alert-success">
+      <div class="alert alert-success mt-4">
         {{ success_msg }}
         <span class="close alert-close">&times;</span>
       </div>
@@ -11,9 +11,9 @@
   {{/if}}
 
   {{#if error_msg}}
-  <div class="row mt-5">
+  <div class="row">
     <div class="col col-sm-12">
-      <div class="alert alert-danger">
+      <div class="alert alert-danger mt-4">
         {{ error_msg }}
         <span class="close alert-close">&times;</span>
       </div>
@@ -22,9 +22,9 @@
   {{/if}}
 
   {{#if error}}
-  <div class="row mt-5">
+  <div class="row">
     <div class="col col-sm-12">
-      <div class="alert alert-danger">
+      <div class="alert alert-danger mt-4">
         {{ error }}
         <span class="close alert-close">&times;</span>
       </div>

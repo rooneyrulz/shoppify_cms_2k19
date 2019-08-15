@@ -1,4 +1,4 @@
-<div class="add-item mt-3">
+<div class="add-item my-5">
   <div class="container">
     {{#if errors}}
     <div class="messages-container">
@@ -7,7 +7,7 @@
       {{/each}}
     </div>
     {{/if}}
-    <h1 class="display-4 text-center mb-5">{{ title }}</h1>
+    <h1 class="display-4 text-center mb-4">{{ title }}</h1>
     <form action="/items/add" method="POST" enctype="multipart/form-data">
       <div class="row">
         <div class="col col-sm-12">

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div class="container">
-    {{#if user}}
+    {{#if authUser}}
     <a class="navbar-brand" href="/dashboard">
       <i class="fab fa-symfony"></i>
       Shoppify
@@ -17,7 +17,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
-        {{#if user}}
+        {{#if authUser}}
         <li class="nav-item">
           <a class="nav-link px-lg-3" href="/dashboard">Dashboard</a>
         </li>
@@ -40,7 +40,7 @@
             Shopping Cart
           </a>
         </li>
-        {{#if user}}
+        {{#if authUser}}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle px-lg-3" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user"></i>

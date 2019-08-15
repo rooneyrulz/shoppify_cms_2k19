@@ -45,7 +45,7 @@ router.get('/', async (req, res, next) => {
     if (profiles.length < 1)
       return res.status(409).render('profile/profiles', {
         title: 'Profiles',
-        error_msg: 'Profiles not found!',
+        error_msg: 'Profiles not found!'
       });
 
     return res
@@ -55,6 +55,31 @@ router.get('/', async (req, res, next) => {
     console.log(error);
     req.flash('error', 'Something went wrong!');
     res.redirect('/user/profiles');
+  }
+});
+
+//  @ROUTE              >    GET  /user/profiles/me
+//  @DESC               >    GET PROFILE BY CURRENT USER
+//  @ACCESS CONTROL     >    PRIVATE
+router.get('/me', isAuth, async (req, res, next) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+      .populate('user')
+      .exec();
+
+    if (!profile)
+      return res.status(400).render('profile/profile_me', {
+        title: 'Profile',
+        error_msg: 'Profile not found!'
+      });
+
+    return res
+      .status(200)
+      .render('profile/profile_me', { title: 'Profile', profile });
+  } catch (error) {
+    console.log(error.message);
+    req.flash('error', 'Something went wrong!');
+    res.redirect('/user/profiles/me');
   }
 });
 
@@ -72,7 +97,7 @@ router.get('/:id', isAuth, async (req, res, next) => {
     if (!profile)
       return res.status(409).render('profile/profile', {
         title: 'Profile',
-        error_msg: 'Profile not found!',
+        error_msg: 'Profile not found!'
       });
 
     if (profile.user.toString() === req.user.id)
@@ -110,7 +135,7 @@ router.post(
       .isEmpty(),
     check('bio', 'Please enter bio!')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -118,13 +143,13 @@ router.post(
     if (!errors.isEmpty())
       return res.status(400).render('profile/create', {
         title: 'Create Profile',
-        errors: errors.array(),
+        errors: errors.array()
       });
 
     if (!req.file)
       return res.status(400).render('profile/create', {
         title: 'Create Profile',
-        error_msg: 'Please include your pic!',
+        error_msg: 'Please include your pic!'
       });
 
     const {
@@ -139,7 +164,7 @@ router.post(
       facebook,
       linkedin,
       instagram,
-      github,
+      github
     } = req.body;
 
     // Build a Profile object
@@ -200,32 +225,5 @@ router.post(
     }
   }
 );
-
-//  @ROUTE              >    GET  /user/profiles/me
-//  @DESC               >    GET PROFILE BY CURRENT USER
-//  @ACCESS CONTROL     >    PRIVATE
-router.get('/me', isAuth, async (req, res, next) => {
-  const { id } = req.user;
-
-  try {
-    const profile = await Profile.findOne({ user: id })
-      .populate('user')
-      .exec();
-
-    if (!profile)
-      return res.status(400).render('profile/profile_me', {
-        title: 'Profile',
-        error_msg: 'Profile not found!',
-      });
-
-    return res
-      .status(200)
-      .render('profile/profile_me', { title: 'Profile', profile });
-  } catch (error) {
-    console.log(error);
-    req.flash('error', 'Something went wrong!');
-    res.redirect('/user/profiles/me');
-  }
-});
 
 export default router;
