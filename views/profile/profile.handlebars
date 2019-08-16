@@ -9,7 +9,10 @@
         <h1>{{profile.user.name}}</h1>
         <br>
         <p class="lead">{{profile.status}}</p>
-        <p class="lead">{{profile.location}}</p>
+        <p class="lead">
+          <i class="fas fa-map-marker-alt"></i>
+          {{profile.location}}
+        </p>
         {{#if authUser}}
           <hr>
           <p>
@@ -39,9 +42,11 @@
             <li class="list-group-item">
               <strong>Skills</strong>
             </li>
+            {{#each profile.skills}}
               <li class="list-group-item">
-              <span></span>
-            </li>
+                <span>{{this}}</span>
+              </li>
+            {{/each}}
           </ul>
         </p>
         <p>
