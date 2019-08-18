@@ -10,18 +10,21 @@
             <h5 class="card-title">{{item.name}}</h5>
             <p class="card-text lead">$ {{item.price}}</p>
             <div class="cart-action" style="display: flex; justify-content: space-between">
-              <form action="/cart/charge" method="POST">
+              <form action="/cart/charge/{{item.price}}/{{item.name}}" method="POST">
                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                  data-key="pk_test_m6mBzbYXpmEFkwg99LGuySrR00PQr95KdI" data-amount="{{item.price}}" data-name="{{item.name}}"
-                  data-description="By {{item.provider}}" data-image="/images/icon.jpg"
-                  data-locale="auto"
-                  data-zip-code="true">
+                  data-key="pk_test_m6mBzbYXpmEFkwg99LGuySrR00PQr95KdI" data-amount="{{item.price}}"
+                  data-name="{{item.name}}" data-description="By {{item.provider}}" data-image="/images/icon.jpg"
+                  data-locale="auto" data-zip-code="true">
                 </script>
-              </form>
-              <button item-Id="{{item._id}}" class="btn btn-danger btn-del">
-                <i class="fas fa-trash"></i>
+                <script>
+                  document.querySelectorAll('.stripe-button-el').forEach(el => el.style.display = 'none');
+                </script>
+                <button type="submit" class="btn btn-buy btn-info">Buy</button>
+                <button type="button" item-Id="{{item._id}}" class="btn btn-danger btn-del">
+                  <i class="fas fa-trash"></i>
                 Remove
-              </button>
+                </button>
+              </form>
             </div>
           </div>
         </div>

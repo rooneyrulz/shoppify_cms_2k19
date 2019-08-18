@@ -8,6 +8,7 @@ import passport from 'passport';
 import logger from 'morgan';
 import path from 'path';
 import { config } from 'dotenv';
+import stripe from 'stripe';
 
 // IMPORT MONGO CONNECTION
 import dbConnection from './config/database';
@@ -27,7 +28,10 @@ import profile from './routes/api/profile';
 const app = express();
 const server = createServer(app);
 
-config();
+if (process.env.NODE_ENV === 'development') config();
+
+if (process.env.NODE_ENV === 'development')
+  stripe.sePublishableKey(process.env.STRIPE_PUBLISHABLE_KEY);
 
 mongoose.Promise = global.Promise;
 
@@ -56,7 +60,7 @@ app.use(
   session({
     secret: 'your secret',
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: true
   })
 );
 

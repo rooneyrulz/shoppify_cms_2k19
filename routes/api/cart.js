@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import Stripe from 'stripe';
 
 // IMPORT MODELS
 import User from '../../models/User';
@@ -6,6 +7,8 @@ import Item from '../../models/Item';
 
 // IMPORT PASSPORT MIDDLEWARE
 import isAuth from '../../middleware/auth';
+
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const router = Router();
 
@@ -47,7 +50,7 @@ router.get('/add/:id', isAuth, async (req, res, next) => {
 });
 
 //  @ROUTE              >    GET  /cart
-//  @DESC               >    GET ITEM BY USER
+//  @DESC               >    RENDER CART
 //  @ACCESS CONTROL     >    PRIVATE
 router.get('/', isAuth, async (req, res, next) => {
   const items = [];
@@ -67,10 +70,47 @@ router.get('/', isAuth, async (req, res, next) => {
       items.unshift(user.items[i]);
     }
 
-    return res.status(200).render('cart', { title: 'Cart', items });
+    return res.status(200).render('cart', {
+      title: 'Cart',
+      items,
+      stripePubKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).render('error', { title: 'Server Error!' });
+  }
+});
+
+//  @ROUTE              >    POST  /cart/charge
+//  @DESC               >    CHARGE FOR CART ITEM
+//  @ACCESS CONTROL     >    PRIVATE
+router.post('/charge/:amount/:desc', isAuth, async (req, res, next) => {
+  const { amount, desc } = req.params;
+
+  try {
+    const customer = await stripe.customers.create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken,
+    });
+
+    const charges = await stripe.charges.create({
+      amount,
+      description: desc,
+      currency: 'usd',
+      customer: customer.id,
+    });
+
+    if (charges) {
+      return res.render('cart/success', { title: 'Thank you!' });
+    }
+
+    console.log('Something went wrong!');
+    req.flash('error_msg', 'Something went wrong!');
+    res.redirect('/cart');
+  } catch (error) {
+    console.log(error);
+    req.flash('error_msg', 'Something went wrong!');
+    res.redirect('/cart');
   }
 });
 
