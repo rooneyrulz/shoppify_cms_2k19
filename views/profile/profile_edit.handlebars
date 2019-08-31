@@ -1,4 +1,4 @@
-<div class="create-profile my-5">
+<div class="edit-profile my-5">
   <div class="container">
     {{#if errors}}
     <div class="messages-container">
@@ -9,13 +9,13 @@
       {{/each}}
     </div>
     {{/if}}
-    <h1 class="mb-4" style="color: #3e5379;">Create Profile</h1>
+    <h1 class="mb-4" style="color: #3e5379;">Edit Profile</h1>
     <form method="POST" action="/user/profiles/create" enctype="multipart/form-data">
       <div class="row">
         <div class="col col-sm-12">
           <div class="form-group">
             <label for="company">Company</label>
-            <input id="company" type="text" name="company" class="form-control form-control-lg" placeholder="Enter your company name">
+            <input id="company" type="text" value="{{profile.company}}" name="company" class="form-control form-control-lg" placeholder="Enter your company name">
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
         <div class="col col-sm-12">
           <div class="form-group">
             <label for="website">Website</label>
-            <input id="website" type="text" name="website" class="form-control form-control-lg"
+            <input id="website" type="text" name="website" class="form-control form-control-lg" value="{{profile.website}}"
               placeholder="Your website">
           </div>
         </div>
@@ -32,14 +32,14 @@
         <div class="col col-sm-12 col-md-6">
           <div class="form-group">
             <label for="location">Location</label>
-            <input id="location" type="text" name="location" class="form-control form-control-lg"
+            <input id="location" value="{{profile.location}}" type="text" name="location" class="form-control form-control-lg"
               placeholder="Your location">
           </div>
         </div>
         <div class="col col-sm-12 col-md-6">
           <div class="form-group">
             <label for="status">Status</label>
-            <input id="status" type="text" name="status" class="form-control form-control-lg"
+            <input id="status" value="{{profile.status}}" type="text" name="status" class="form-control form-control-lg"
               placeholder="Martial status">
           </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="col col-sm-12">
           <div class="form-group">
             <label for="skills">Skills</label>
-            <input id="skills" type="text" name="skills" class="form-control form-control-lg"
+            <input id="skills" value="{{profile.skills}}" type="text" name="skills" class="form-control form-control-lg"
               placeholder="Marketting, Development, Teaching..">
           </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="col col-sm-12">
           <div class="form-group">
             <label for="bio">Bio</label>
-            <textarea name="bio" id="bio" class="form-control form-control-lg" placeholder="Who you are.."></textarea>
+            <textarea name="bio" value="{{profile.bio}}" id="bio" class="form-control form-control-lg" placeholder="Who you are.."></textarea>
           </div>
         </div>
       </div>
@@ -81,7 +81,7 @@
                         <div class="col col-sm-12">
                           <div class="form-group">
                             <label for="youtube">Youtube</label>
-                            <input name="youtube" id="youtube" class="form-control" placeholder="Youtube link">
+                            <input name="youtube" value="{{profile.social.youtube}}" id="youtube" class="form-control" placeholder="Youtube link">
                           </div>
                         </div>
                       </div>
@@ -89,7 +89,7 @@
                         <div class="col col-sm-12">
                           <div class="form-group">
                             <label for="twitter">Twitter</label>
-                            <input name="twitter" id="twitter" class="form-control" placeholder="Twitter link">
+                            <input name="twitter" value="{{profile.social.twitter}}" id="twitter" class="form-control" placeholder="Twitter link">
                           </div>
                         </div>
                       </div>
@@ -97,7 +97,7 @@
                         <div class="col col-sm-12">
                           <div class="form-group">
                             <label for="facebook">Facebook</label>
-                            <input name="facebook" id="facebook" class="form-control" placeholder="Facebook link">
+                            <input value="{{profile.social.facebook}}" name="facebook" id="facebook" class="form-control" placeholder="Facebook link">
                           </div>
                         </div>
                       </div>
@@ -105,7 +105,7 @@
                         <div class="col col-sm-12">
                           <div class="form-group">
                             <label for="linkedin">Linkedin</label>
-                            <input name="linkedin" id="linkedin" class="form-control" placeholder="Linkedin link">
+                            <input value="{{profile.social.linkedin}}" name="linkedin" id="linkedin" class="form-control" placeholder="Linkedin link">
                           </div>
                         </div>
                       </div>
@@ -113,7 +113,7 @@
                         <div class="col col-sm-12">
                           <div class="form-group">
                             <label for="instagram">Instagram</label>
-                            <input name="instagram" id="instagram" class="form-control" placeholder="Instagram link">
+                            <input value="{{profile.social.instagram}}" name="instagram" id="instagram" class="form-control" placeholder="Instagram link">
                           </div>
                         </div>
                       </div>
@@ -121,7 +121,7 @@
                         <div class="col col-sm-12">
                           <div class="form-group">
                             <label for="github">Github</label>
-                            <input name="github" id="github" class="form-control" placeholder="Github link">
+                            <input value="{{profile.social.github}}" name="github" id="github" class="form-control" placeholder="Github link">
                           </div>
                         </div>
                       </div>
@@ -136,12 +136,12 @@
       <div class="row">
         <div class="col col-sm-12">
           <div class="form-group">
-            <label for="exampleFormControlFile1">Pick your profile pic</label>
+            <label for="exampleFormControlFile1">Change your profile pic</label>
             <input type="file" name="avatar" class="form-control-file" id="exampleFormControlFile1">
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-lg btn-info">Create</button>
+      <button type="submit" class="btn btn-lg btn-info">Save</button>
     </form>
   </div>
 </div>

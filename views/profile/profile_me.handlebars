@@ -1,12 +1,12 @@
 <div class="profile-me my-5">
   <div class="container">
-    <div class="profile-header" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
-      <h1 class="text-primary mb-5">My Profile</h1>
-      <a href="#!" class="btn btn-secondary float-right">Edit</a>
+    <div class="profile-header mb-5" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+      <h1 class="m-0" style="color: #3e5379;">My Profile</h1>
+      <a style="background: #3e5379;" href="/user/profiles/edit/{{profile.id}}" class="btn float-right text-light">Edit</a>
     </div>
     <div class="row">
       <div class="col-sm-12 col-md-6">
-        <img src="{{profile.avatar}}" class="rounded" alt="...">
+        <img src="{{profile.avatar}}" style="width: 400px" class="rounded" alt="...">
         <br>
         <br>
         <h1>{{profile.user.name}}</h1>
@@ -67,6 +67,7 @@
             {{#if profile.social.youtube}}
               <a href="{{profile.social.youtube}}">
                 <i class="fab fa-youtube"></i>
+                Youtube
               </a>
             {{/if}}
             {{#if profile.social.twitter}}

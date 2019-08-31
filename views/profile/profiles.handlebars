@@ -1,25 +1,23 @@
 <div class="profiles my-5">
   <div class="container">
-    <h1 class="text-primary mb-4">Profiles</h1>
+    <h1 style="color: #3e5379;">Profiles</h1>
+    <br>
     {{#each profiles}}
-    <div class="card mb-3 profiles-card">
-      <div class="row">
-        <div class="col-lg-4">
-          <img src="{{avatar}}" class="rounded" alt="...">
-        </div>
-        <div class="col-lg-8">
-          <div class="card-body">
-            <div>
-              <h5 class="card-title">{{user.name}}</h5>
-              <p class="lead">{{location}}</p>
-              <p class="card-text"><small class="text-muted">{{date}}</small></p>
-            </div>
-            <a class="btn btn-primary" href="/user/profiles/{{_id}}">
-              <i class="far fa-eye"></i>
-              View Profile
-            </a>
-          </div>
-        </div>
+    <div class="profiles-card mb-5">
+      <img src="{{avatar}}" style="width: 350px" class="rounded" alt="...">
+      <div>
+        <h5 class="card-title">{{user.name}}</h5>
+        <p class="lead">
+          <i class="fas fa-map-marker-alt"></i>
+          {{location}}
+        </p>
+        <p class="card-text date"><small class="">{{date}}</small></p>
+      </div>
+      <div>
+        <a class="btn btn-light" href="/user/profiles/{{_id}}">
+        <i class="far fa-eye"></i>
+        View
+      </a>
       </div>
     </div>
     {{/each}}

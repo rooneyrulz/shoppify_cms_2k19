@@ -9,8 +9,8 @@ body {
   font-weight: 400;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
-  background: #eaeaea;
   overflow-x: hidden;
+  background: #fff;
 }
 
 .messages-container {

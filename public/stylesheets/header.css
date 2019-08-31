@@ -1,13 +1,23 @@
 
 nav {
-  background: #fff;
+  background: #3e5379;
+  color: #fff !important;
 }
 
 .navbar-brand {
   font-family: 'Operator Mono';
+  color: #fff !important;
 }
 
 .navbar-brand img {
   width: 50px;
   height: 50px;
+}
+
+nav a {
+  color: #fff !important;
+}
+
+nav .dropdown-item {
+  color: #111 !important;
 }

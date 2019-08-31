@@ -70,7 +70,7 @@ router.get('/me', isAuth, async (req, res, next) => {
     if (!profile)
       return res.status(400).render('profile/profile_me', {
         title: 'Profile',
-        error_msg: 'Profile not found!',
+        error_msg: 'Profile not found!'
       });
 
     return res
@@ -135,9 +135,6 @@ router.post(
       .isEmpty(),
     check('skills', 'Please provide at least one skill!')
       .not()
-      .isEmpty(),
-    check('bio', 'Please enter bio!')
-      .not()
       .isEmpty()
   ],
   async (req, res, next) => {
@@ -147,12 +144,6 @@ router.post(
       return res.status(400).render('profile/create', {
         title: 'Create Profile',
         errors: errors.array()
-      });
-
-    if (!req.file)
-      return res.status(400).render('profile/create', {
-        title: 'Create Profile',
-        error_msg: 'Please include your pic!'
       });
 
     const {
@@ -208,19 +199,25 @@ router.post(
 
         req.flash('success_msg', 'Profile updated!');
         res.redirect('/user/profiles/me');
+      } else {
+        if (!req.file)
+          return res.status(400).render('profile/create', {
+            title: 'Create Profile',
+            error_msg: 'Please include your pic!',
+          });
+
+        // Create
+        profile = new Profile(profileField);
+
+        await profile.save();
+
+        user.profile = profile._id;
+
+        await user.save();
+
+        req.flash('success_msg', 'Profile created!');
+        res.redirect('/user/profiles/me');
       }
-
-      // Create
-      profile = new Profile(profileField);
-
-      await profile.save();
-
-      user.profile = profile._id;
-
-      await user.save();
-
-      req.flash('success_msg', 'Profile created!');
-      res.redirect('/user/profiles/me');
     } catch (error) {
       console.log(error);
       req.flash('error', 'Something went wrong!');
@@ -228,5 +225,30 @@ router.post(
     }
   }
 );
+
+//  @ROUTE              >    GET  /user/profiles/edit
+//  @DESC               >    EDIT PROFILE
+//  @ACCESS CONTROL     >    PRIVATE
+router.get('/edit/:id', isAuth, async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const profile = await Profile.findById(id).exec();
+
+    if (!profile)
+      return res.status(400).render('profile/profile_edit', {
+        title: 'Profile',
+        error_msg: 'Profile not found'
+      });
+
+    return res
+      .status(200)
+      .render('profile/profile_edit', { title: 'Edit Profile', profile });
+  } catch (error) {
+    console.log(error);
+    req.flash('error', 'Something went wrong!');
+    res.redirect('/user/profiles/edit');
+  }
+});
 
 export default router;
