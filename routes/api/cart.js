@@ -86,7 +86,6 @@ router.get('/', isAuth, async (req, res, next) => {
 //  @ACCESS CONTROL     >    PRIVATE
 router.post('/charge/:amount/:desc', isAuth, async (req, res, next) => {
   const { amount, desc } = req.params;
-
   try {
     const customer = await stripe.customers.create({
       email: req.body.stripeEmail,

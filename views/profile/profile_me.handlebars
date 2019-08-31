@@ -1,5 +1,103 @@
-<div class="profile-me">
+<div class="profile-me my-5">
   <div class="container">
-    <h1 class="display-4">My Profile</h1>
+    <div class="profile-header" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+      <h1 class="display-4 mb-5">My Profile</h1>
+      <a href="#!" class="btn btn-secondary float-right">Edit</a>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <img src="{{profile.avatar}}" class="rounded" alt="...">
+        <br>
+        <br>
+        <h1>{{profile.user.name}}</h1>
+        <br>
+        <p class="lead">{{profile.status}}</p>
+        <p class="lead">
+          <i class="fas fa-map-marker-alt"></i>
+          {{profile.location}}
+        </p>
+          <hr>
+          <p>
+            <a href="#!" class="btn btn-danger btn-sm">Delete My Account</a>
+          </p>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Company</strong>
+              <span class="float-right">{{profile.company}}</span>
+            </li>
+          </ul>
+        </p>
+        <p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Website</strong>
+              <span class="float-right">{{profile.website}}</span>
+            </li>
+          </ul>
+        </p>
+        <p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Skills</strong>
+            </li>
+            {{#each profile.skills}}
+              <li class="list-group-item">
+                <span>{{this}}</span>
+              </li>
+            {{/each}}
+          </ul>
+        </p>
+        <p>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Bio</strong>
+            </li>
+            <li class="list-group-item">{{profile.bio}}</li>
+          </ul>
+        </p>
+        {{#if profile.social}}
+          <div class="profile-follow">
+          <p>
+            <strong>Follow</strong>
+          </p>
+          <p>
+            {{#if profile.social.youtube}}
+              <a href="{{profile.social.youtube}}">
+                <i class="fab fa-youtube"></i>
+              </a>
+            {{/if}}
+            {{#if profile.social.twitter}}
+              <a href="{{profile.social.twitter}}">
+                <i class="fab fa-twitter"></i>
+              </a>
+            {{/if}}
+            {{#if profile.social.facebook}}
+              <a href="{{profile.social.facebook}}">
+                Fb
+              </a>
+            {{/if}}
+            {{#if profile.social.linkedin}}
+              <a href="{{profile.social.linkedin}}">
+                LinkedIn
+              </a>
+            {{/if}}
+            {{#if profile.social.instagram}}
+              <a href="{{profile.social.instagram}}">
+                Insta
+              </a>
+            {{/if}}
+            {{#if profile.social.github}}
+              <a href="{{profile.social.github}}">
+                Github
+              </a>
+            {{/if}}
+          </p>
+        </div>
+        {{/if}}
+      </div>
+    </div>
   </div>
 </div>

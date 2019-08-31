@@ -70,12 +70,12 @@ router.get('/me', isAuth, async (req, res, next) => {
     if (!profile)
       return res.status(400).render('profile/profile_me', {
         title: 'Profile',
-        error_msg: 'Profile not found!'
+        error_msg: 'Profile not found!',
       });
 
     return res
       .status(200)
-      .render('profile/profile_me', { title: 'Profile', profile });
+      .render('profile/profile_me', { title: 'My Profile', profile });
   } catch (error) {
     console.log(error.message);
     req.flash('error', 'Something went wrong!');
@@ -100,8 +100,11 @@ router.get('/:id', isAuth, async (req, res, next) => {
         error_msg: 'Profile not found!'
       });
 
-    if (profile.user.toString() === req.user.id)
-      return res.redirect('/user/profiles/me');
+    if (profile.user.id.toString() === req.user.id) {
+      return res
+        .status(200)
+        .render('profile/profile_me', { title: 'My Profile', profile });
+    }
 
     return res
       .status(200)
