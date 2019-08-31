@@ -36,3 +36,35 @@
   }
 }
 
+
+.profile-main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 1rem;
+  justify-items: center;
+  padding: 1rem;
+}
+
+@media Screen and (max-width: 785px) {
+  .profile-main {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .profile-main-top {
+    margin-bottom: 4rem;
+  }
+}
+
+
+.profile-follow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  grid-row-gap: 3rem;
+  justify-items: center;
+  align-items: center;
+  padding: 1rem;
+}
+

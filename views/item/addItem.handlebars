@@ -3,7 +3,9 @@
     {{#if errors}}
     <div class="messages-container">
       {{#each errors}}
-      <div class="alert alert-danger">{{msg}}</div>
+      <div class="alert alert-danger">{{msg}}
+        <span class="close alert-close">&times;</span>
+      </div>
       {{/each}}
     </div>
     {{/if}}
@@ -49,7 +51,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-info mt-3 btn-lg">Submit</button>
+      <button style="background: #3e5379; color: #fff" type="submit" class="btn mt-3 btn-lg">Publish</button>
     </form>
   </div>
 </div>

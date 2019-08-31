@@ -2,6 +2,7 @@
 nav {
   background: #3e5379;
   color: #fff !important;
+  border-bottom: 1px #fff solid;
 }
 
 .navbar-brand {

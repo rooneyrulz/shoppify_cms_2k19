@@ -1,44 +1,42 @@
 <div class="profile-me my-5">
   <div class="container">
-    <div class="profile-header mb-5" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+    <div class="profile-header mb-4" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
       <h1 class="m-0" style="color: #3e5379;">My Profile</h1>
       <a style="background: #3e5379;" href="/user/profiles/edit/{{profile.id}}" class="btn float-right text-light">Edit</a>
     </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-6">
+    <div class="profile-main mb-5">
+      <div class="profile-main-top">
         <img src="{{profile.avatar}}" style="width: 400px" class="rounded" alt="...">
         <br>
         <br>
-        <h1>{{profile.user.name}}</h1>
+        <h3>{{profile.user.name}}</h3>
         <br>
-        <p class="lead">{{profile.status}}</p>
         <p class="lead">
           <i class="fas fa-map-marker-alt"></i>
           {{profile.location}}
         </p>
-          <hr>
-          <p>
-            <a href="#!" class="btn btn-danger btn-sm">Delete My Account</a>
-          </p>
+        <p class="lead">{{profile.status}}</p>
+        <br>
+        <p class="lead">
+          <a href="#!" class="btn btn-danger">Delete My Account</a>
+        </p>
+        <hr>
       </div>
-      <div class="col-sm-12 col-md-6">
-        <p>
+      <div class="profile-main-bottom">
           <ul class="list-group">
             <li class="list-group-item">
               <strong>Company</strong>
               <span class="float-right">{{profile.company}}</span>
             </li>
           </ul>
-        </p>
-        <p>
+          <br>
           <ul class="list-group">
             <li class="list-group-item">
               <strong>Website</strong>
               <span class="float-right">{{profile.website}}</span>
             </li>
           </ul>
-        </p>
-        <p>
+          <br>
           <ul class="list-group">
             <li class="list-group-item">
               <strong>Skills</strong>
@@ -49,56 +47,61 @@
               </li>
             {{/each}}
           </ul>
-        </p>
-        <p>
+          <br>
           <ul class="list-group">
             <li class="list-group-item">
               <strong>Bio</strong>
             </li>
             <li class="list-group-item">{{profile.bio}}</li>
           </ul>
-        </p>
-        {{#if profile.social}}
-          <div class="profile-follow">
-          <p>
-            <strong>Follow</strong>
-          </p>
-          <p>
-            {{#if profile.social.youtube}}
-              <a href="{{profile.social.youtube}}">
-                <i class="fab fa-youtube"></i>
-                Youtube
-              </a>
-            {{/if}}
-            {{#if profile.social.twitter}}
-              <a href="{{profile.social.twitter}}">
-                <i class="fab fa-twitter"></i>
-              </a>
-            {{/if}}
-            {{#if profile.social.facebook}}
-              <a href="{{profile.social.facebook}}">
-                Fb
-              </a>
-            {{/if}}
-            {{#if profile.social.linkedin}}
-              <a href="{{profile.social.linkedin}}">
-                LinkedIn
-              </a>
-            {{/if}}
-            {{#if profile.social.instagram}}
-              <a href="{{profile.social.instagram}}">
-                Insta
-              </a>
-            {{/if}}
-            {{#if profile.social.github}}
-              <a href="{{profile.social.github}}">
-                Github
-              </a>
-            {{/if}}
-          </p>
-        </div>
-        {{/if}}
       </div>
     </div>
+      {{#if profile.social}}
+        <h4>Follow</h4>
+        <div class="profile-follow">
+          <div class="social">
+            {{#if profile.social.youtube}}
+              <a href="{{profile.social.youtube}}">
+                <i class="fab fa-youtube fa-3x text-danger"></i>
+              </a>
+            {{/if}}
+          </div>
+          <div class="social">
+            {{#if profile.social.twitter}}
+              <a href="{{profile.social.twitter}}">
+                <i class="fab fa-twitter fa-3x"></i>
+              </a>
+            {{/if}}
+          </div>
+          <div class="social">
+            {{#if profile.social.facebook}}
+              <a href="{{profile.social.facebook}}">
+                <i class="fab fa-facebook fa-3x text-primary"></i>
+              </a>
+            {{/if}}
+          </div>
+          <div class="social">
+            {{#if profile.social.linkedin}}
+              <a href="{{profile.social.linkedin}}">
+                <i class="fab fa-linkedin fa-3x"></i>
+              </a>
+            {{/if}}
+          </div>
+          <div class="social">
+            {{#if profile.social.instagram}}
+              <a href="{{profile.social.instagram}}">
+                <i class="fab fa-instagram fa-3x text-dark"></i>
+              </a>
+            {{/if}}
+          </div>
+          <div class="social">
+            {{#if profile.social.github}}
+              <a href="{{profile.social.github}}">
+                <i class="fab fa-github fa-3x text-secondary"></i>
+              </a>
+            {{/if}}
+          </div>
+        </div>
+      {{/if}}
   </div>
 </div>
