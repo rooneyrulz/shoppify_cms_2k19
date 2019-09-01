@@ -9,7 +9,12 @@
       {{/each}}
     </div>
     {{/if}}
-    <h1 class="mb-4" style="color: #3e5379;">Edit Profile</h1>
+    <div style="display: flex; flex-direction:row; align-items: center; justify-content: space-between" class="edit-profile-header">
+      <h1 class="mb-4" style="color: #3e5379;">Edit Profile</h1>
+      <a href="/user/profiles/{{profile.id}}" class="btn btn-secondary">
+        Back
+      </a>
+    </div>
     <form method="POST" action="/user/profiles/create" enctype="multipart/form-data">
       <div class="row">
         <div class="col col-sm-12">
