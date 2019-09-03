@@ -5,6 +5,12 @@ nav {
   border-bottom: 1px #fff solid;
 }
 
+@media Screen and (max-width: 990px) {
+  .navbar-collapse {
+    text-align: center;
+  }
+}
+
 .navbar-brand {
   font-family: 'Operator Mono';
   color: #fff !important;
