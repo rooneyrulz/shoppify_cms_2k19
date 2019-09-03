@@ -11,10 +11,11 @@
     {{/if}}
     <div style="display: flex; flex-direction:row; align-items: center; justify-content: space-between" class="edit-profile-header">
       <h1 class="mb-4" style="color: #3e5379;">Edit Profile</h1>
-      <a href="/user/profiles/{{profile.id}}" class="btn btn-secondary">
+      <a style="background: #3e5379;" href="/user/profiles/{{profile.id}}" class="btn text-light">
         Back
       </a>
     </div>
+    <hr>
     <form method="POST" action="/user/profiles/create" enctype="multipart/form-data">
       <div class="row">
         <div class="col col-sm-12">
@@ -146,7 +147,7 @@
           </div>
         </div>
       </div>
-      <button style="background: #3e5379; color: #fff" type="submit" class="btn btn-lg">Save</button>
+      <button style="background: #3e5379; color: #fff" type="submit" class="btn btn-lg mt-2">Save</button>
     </form>
   </div>
 </div>

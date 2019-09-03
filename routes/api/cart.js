@@ -86,6 +86,15 @@ router.get('/', isAuth, async (req, res, next) => {
 //  @ACCESS CONTROL     >    PRIVATE
 router.post('/charge/:amount/:desc', isAuth, async (req, res, next) => {
   const { amount, desc } = req.params;
+
+  // res.setHeader(
+  //   `Authorization: Bearer sk_test_CEHSUGH8VpOnRCJNtVkWawkh00b1mHddha`
+  // );
+
+  // res.writeHead(200, {
+  //   Authorization: 'Bearer sk_test_CEHSUGH8VpOnRCJNtVkWawkh00b1mHddha'
+  // });
+
   try {
     const customer = await stripe.customers.create({
       email: req.body.stripeEmail,

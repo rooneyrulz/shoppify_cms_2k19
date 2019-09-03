@@ -61,7 +61,7 @@ app.use(
   session({
     secret: 'your secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
@@ -84,6 +84,21 @@ app.use(passport.session());
 
 app.get('*', (req, res, next) => {
   res.locals.authUser = req.user || null;
+  next();
+});
+
+app.use((req, res, next) => {
+  req.header('Access-Control-Allow-Origin', '*');
+  req.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    req.header('Access-Control-Allow-Methods', 'GET, PUT, POST, PATCH, DELETE');
+    return res.status(200).json({});
+  }
+
   next();
 });
 

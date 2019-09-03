@@ -30,25 +30,26 @@
   color: #fff;
 }
 
+.home-content h1 {
+  font-family: 'Poppins', sans-serif;
+}
+
 .home-content .btn {
-  padding: 1rem 2.5rem;
-  color: #fff;
+  padding: 1rem 3.5rem;
+  color: #223655;
   outline: none;
 }
 
 .btn-signup {
-  background: rgb(236, 125, 84);
-  border: 1px #fff solid;
-}
-
-.btn-signup:hover {
-  background: rgb(207, 96, 56);
+  background: coral;
+  color: #fff !important;
 }
 
 .btn-signin {
-  border: 1px #fff solid;
+  background: #fff;
 }
 
-.btn-signin:hover {
-  background: rgb(66, 66, 66);
+.btn-signup:hover, .btn-signin:hover {
+  background: #223655;
+  color: #fff;
 }

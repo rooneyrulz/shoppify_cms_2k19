@@ -1,6 +1,10 @@
 <div class="profile my-5">
   <div class="container">
-    <h1 class="mb-4" style="color: #3e5379;">Profile</h1>
+    <div class="profile-header mb-4" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+      <h1 class="m-0" style="color: #3e5379;">Profile</h1>
+      <a style="background: #3e5379;" href="/user/profiles" class="btn float-right text-light">Back</a>
+    </div>
+    <hr>
     <div class="profile-main mb-5">
       <div class="profile-main-top">
         <img src="{{profile.avatar}}" style="width: 400px" class="rounded" alt="...">
@@ -20,14 +24,18 @@
           <ul class="list-group">
             <li class="list-group-item">
               <strong>Company</strong>
-              <span class="float-right">{{profile.company}}</span>
+            </li>
+            <li class="list-group-item">
+              <span>{{profile.company}}</span>
             </li>
           </ul>
           <br>
           <ul class="list-group">
             <li class="list-group-item">
               <strong>Website</strong>
-              <span class="float-right">{{profile.website}}</span>
+            </li>
+            <li class="list-group-item">
+              <span>{{profile.website}}</span>
             </li>
           </ul>
           <br>

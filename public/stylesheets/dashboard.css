@@ -32,10 +32,28 @@
 
 .dashboard-content .btn {
   padding: 1rem 2.5rem;
-  border: 1px #fff solid;
   color: #fff;
+  box-shadow: 1px 2px 4px #000;
 }
 
 .dashboard-content .btn:hover {
+  box-shadow: none;
+}
+
+.dashboard-content .btn-parchasing {
   background: #335486;
+}
+
+.dashboard-content .btn-parchasing:hover {
+  background: #223655;
+}
+
+.dashboard-content .btn-selling, .btn-profile {
+  background: #fff;
+  color: #335486;
+}
+
+.dashboard-content .btn-selling:hover, .dashboard-content .btn-profile:hover {
+  background: #333;
+  color: #fff;
 }

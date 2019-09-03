@@ -2,22 +2,29 @@
   <div class="dashboard-overlay"></div>
     <div class="container dashboard-container">
       <div class="dashboard-content">
-      <h1 class="display-3">{{ title }}</h1>
-      <br>
-      <p class="lead">Welcome {{user.name}},
-      {{#if profile}}
-      <span></span>
-      {{else}}
-      <span>It seems you have not setup your profile yet, Let's create one..</span>
-      {{/if}}
-      </p>
-      <br>
-      <a class="btn btn-dashboard btn-lg" href="/items" role="button">Start Parchasing</a>
-      {{#if profile}}
-        <a class="btn btn-add-item btn-lg" href="/items/add" role="button">Start Selling</a>
-      {{else}}
-        <a class="btn btn-create-profile btn-lg" href="/user/profiles/create" role="button">Create Profile</a>
-      {{/if}}
+        <h1 class="display-3">{{ title }}</h1>
+        <p>
+          <p class="lead">
+            Welcome {{user.name}},
+          </p>
+          {{#if profile}}
+            <p class="lead">
+              Hey, Did you know you can now sell items on Shoppify
+            </p>
+          {{else}}
+            <p class="lead">It seems you have not setup your profile yet, Let's create one..</p>
+          {{/if}}
+        </p>
+        <br>
+        <div class="btn-group">
+          <a class="btn btn-parchasing btn-lg" href="/items" role="button">Start Parchasing</a>
+          {{#if profile}}
+            <a class="btn btn-selling btn-lg" href="/items/add" role="button">Start Selling</a>
+          {{else}}
+            <a class="btn btn-profile btn-lg" href="/user/profiles/create" role="button">Create Profile</a>
+          {{/if}}
+        </div>
+      </div>
     </div>
   </div>
 </div>
