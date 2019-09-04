@@ -38,6 +38,9 @@
           <a class="nav-link px-lg-3" href="/cart">
             <i class="fas fa-shopping-cart"></i>
             Cart
+            {{#if authUser}}
+              <span style="display: inline; padding: .5rem .70em; border-radius: 50%; margin-left: .3em; border: 1px #fff solid;" class="cart-count bg-danger">{{ authUser.items.length }}</span>
+            {{/if}}
           </a>
         </li>
         {{#if authUser}}
