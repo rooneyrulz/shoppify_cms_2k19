@@ -19,7 +19,7 @@ $(document).ready(() => {
       error: err => {
         console.log(err);
         window.location.href = '/cart';
-      },
+      }
     });
   });
 });

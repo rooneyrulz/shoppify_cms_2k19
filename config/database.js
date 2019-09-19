@@ -7,6 +7,12 @@ export default async () => {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,
+      server: {
+        // sets how many times to try reconnecting
+        reconnectTries: 3,
+        // sets the delay between every retry (milliseconds)
+        reconnectInterval: 1000
+      }
     });
 
     if (isConnected) console.log('conecting to mongodb...');

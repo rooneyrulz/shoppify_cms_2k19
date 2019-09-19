@@ -29,7 +29,7 @@ router.post(
       .isEmpty(),
     check('cPassword', 'Please confirm password!')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -43,7 +43,7 @@ router.post(
 
     if (password !== cPassword) {
       req.flash('error_msg', 'Password is not match!');
-      res.redirect('/user/register');
+      return res.redirect('/user/register');
     }
 
     try {
@@ -52,7 +52,7 @@ router.post(
       if (user)
         return res.status(409).render('auth/register', {
           title: 'Sign Up',
-          error_msg: 'User already exist!',
+          error_msg: 'User already exist!'
         });
 
       const hashedPwd = await hash(password, 12);
@@ -63,13 +63,13 @@ router.post(
       const newUser = new User({
         name,
         email,
-        password: hashedPwd,
+        password: hashedPwd
       });
 
       await newUser.save();
 
       req.flash('success_msg', "Let's login!");
-      res.redirect('/user/login');
+      return res.redirect('/user/login');
     } catch (error) {
       console.log(error.message);
       return res.status(500).render('error', { title: 'Server Error!' });
