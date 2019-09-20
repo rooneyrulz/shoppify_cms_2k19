@@ -1,4 +1,4 @@
-import express from 'express';
+const express = require('express');
 import { createServer } from 'http';
 import exphbs from 'express-handlebars';
 import session from 'express-session';
@@ -61,7 +61,7 @@ app.use(
   session({
     secret: 'your secret',
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: true
   })
 );
 
