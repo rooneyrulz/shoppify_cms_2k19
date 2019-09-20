@@ -1,10 +1,10 @@
-import { Strategy } from 'passport-local';
-import { compare } from 'bcryptjs';
+const { Strategy } = require('passport-local');
+const { compare } = require('bcryptjs');
 
 // IMPORT MODEL
-import User from '../models/User';
+const User = require('../models/User');
 
-export default passport => {
+const passportConfig = passport => {
   passport.use(
     new Strategy(async (username, password, done) => {
       try {
@@ -36,3 +36,5 @@ export default passport => {
     });
   });
 };
+
+module.exports = passportConfig;

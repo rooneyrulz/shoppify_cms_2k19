@@ -1,10 +1,10 @@
-import { Router } from 'express';
+const { Router } = require('express');
 
 // IMPORT PASSPORT MIDDLEWARE
-import isAuth from '../../middleware/auth';
+const isAuth = require('../../middleware/auth');
 
 // IMPORT MODELS
-import Profile from '../../models/Profile';
+const Profile = require('../../models/Profile');
 
 const router = Router({ strict: true });
 
@@ -30,4 +30,4 @@ router.get('/', isAuth, async (req, res, next) => {
   }
 });
 
-export default router;
+module.exports = router;

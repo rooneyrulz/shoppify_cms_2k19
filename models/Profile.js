@@ -1,75 +1,75 @@
-import { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'Users',
+    ref: 'Users'
   },
 
   company: {
     type: String,
-    required: [true, 'company is required!'],
+    required: [true, 'company is required!']
   },
 
   website: {
-    type: String,
+    type: String
   },
 
   location: {
     type: String,
-    required: [true, 'location must be provided!'],
+    required: [true, 'location must be provided!']
   },
 
   status: {
     type: String,
-    required: [true, 'status is required!'],
+    required: [true, 'status is required!']
   },
 
   skills: {
     type: [String],
-    required: [true, 'leave at least one skill!'],
+    required: [true, 'leave at least one skill!']
   },
 
   bio: {
     type: String,
-    required: [true, 'bio is required!'],
+    required: [true, 'bio is required!']
   },
 
   social: {
     youtube: {
-      type: String,
+      type: String
     },
 
     twitter: {
-      type: String,
+      type: String
     },
 
     facebook: {
-      type: String,
+      type: String
     },
 
     linkedin: {
-      type: String,
+      type: String
     },
 
     instagram: {
-      type: String,
+      type: String
     },
 
     github: {
-      type: String,
-    },
+      type: String
+    }
   },
 
   avatar: {
     type: String,
-    required: [true, 'please provide your avatar!'],
+    required: [true, 'please provide your avatar!']
   },
 
   date: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
-export default model('Profiles', profileSchema);
+module.exports = model('Profiles', profileSchema);

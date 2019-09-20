@@ -1,29 +1,29 @@
 const express = require('express');
-import { createServer } from 'http';
-import exphbs from 'express-handlebars';
-import session from 'express-session';
-import flash from 'connect-flash';
-import mongoose from 'mongoose';
-import passport from 'passport';
-import logger from 'morgan';
-import path from 'path';
-import { config } from 'dotenv';
-import stripe from 'stripe';
+const { createServer } = require('http');
+const exphbs = require('express-handlebars');
+const session = require('express-session');
+const flash = require('connect-flash');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const logger = require('morgan');
+const path = require('path');
+const { config } = require('dotenv');
+const stripe = require('stripe');
 
 // IMPORT MONGO CONNECTION
-import dbConnection from './config/database';
+const dbConnection = require('./config/database');
 
 // IMPORT PASSPORT CONFIG
-import passportConfig from './config/passport';
+const passportConfig = require('./config/passport');
 
 // IMPORT ROUTES
-import home from './routes/api/home';
-import dashboard from './routes/api/dashboard';
-import register from './routes/api/user';
-import auth from './routes/api/auth';
-import item from './routes/api/item';
-import cart from './routes/api/cart';
-import profile from './routes/api/profile';
+const home = require('./routes/api/home');
+const dashboard = require('./routes/api/dashboard');
+const register = require('./routes/api/user');
+const auth = require('./routes/api/auth');
+const item = require('./routes/api/item');
+const cart = require('./routes/api/cart');
+const profile = require('./routes/api/profile');
 
 const app = express();
 const server = createServer(app);

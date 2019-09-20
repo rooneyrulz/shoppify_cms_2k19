@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import passport from 'passport';
+const { Router } = require('express');
+const passport = require('passport');
 
 const router = Router({ strict: true });
 
@@ -17,7 +17,7 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/user/login',
-    failureFlash: true,
+    failureFlash: true
   })(req, res, next);
 });
 
@@ -30,4 +30,4 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/user/login');
 });
 
-export default router;
+module.exports = router;

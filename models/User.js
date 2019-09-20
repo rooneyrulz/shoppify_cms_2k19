@@ -1,40 +1,40 @@
-import { Schema, model } from 'mongoose';
+const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'Please enter user name..'],
+    required: [true, 'Please enter user name..']
   },
 
   email: {
     type: String,
     unique: true,
-    required: [true, 'Please enter email id..'],
+    required: [true, 'Please enter email id..']
   },
 
   password: {
     type: String,
-    required: [true, 'Please enter password..'],
+    required: [true, 'Please enter password..']
   },
 
   items: [
     {
       item: {
         type: Schema.Types.ObjectId,
-        ref: 'Items',
-      },
-    },
+        ref: 'Items'
+      }
+    }
   ],
 
   profile: {
     type: Schema.Types.ObjectId,
-    ref: 'Profiles',
+    ref: 'Profiles'
   },
 
   date: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
-export default model('Users', userSchema);
+module.exports = model('Users', userSchema);

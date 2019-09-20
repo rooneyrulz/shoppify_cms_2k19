@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import config from 'config';
+const mongoose = require('mongoose');
+const config = require('config');
 
-export default async () => {
+const init = async () => {
   try {
     const isConnected = await mongoose.connect(config.get('MONGO_URI'), {
       useNewUrlParser: true,
@@ -21,3 +21,5 @@ export default async () => {
     throw error.message;
   }
 };
+
+module.exports = init;

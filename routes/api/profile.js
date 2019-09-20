@@ -1,15 +1,15 @@
-import { Router } from 'express';
-import { check, validationResult } from 'express-validator';
+const { Router } = require('express');
+const { check, validationResult } = require('express-validator');
 
 // IMPORT PASSPORT MIDDLEWARE
-import isAuth from '../../middleware/auth';
+const isAuth = require('../../middleware/auth');
 
 // IMPORT FILE UPLOADS
-import upload from '../../utils/upload';
+const upload = require('../../utils/upload');
 
 // IMPORT MODELS
-import Profile from '../../models/Profile';
-import User from '../../models/User';
+const Profile = require('../../models/Profile');
+const User = require('../../models/User');
 
 const router = Router({ strict: true });
 
@@ -203,7 +203,7 @@ router.post(
         if (!req.file)
           return res.status(400).render('profile/create', {
             title: 'Create Profile',
-            error_msg: 'Please include your pic!',
+            error_msg: 'Please include your pic!'
           });
 
         // Create
@@ -251,4 +251,4 @@ router.get('/edit/:id', isAuth, async (req, res, next) => {
   }
 });
 
-export default router;
+module.exports = router;

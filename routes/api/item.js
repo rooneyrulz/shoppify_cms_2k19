@@ -1,14 +1,14 @@
-import { Router } from 'express';
-import { check, validationResult } from 'express-validator';
+const { Router } = require('express');
+const { check, validationResult } = require('express-validator');
 
 // IMPORT MODELS
-import Item from '../../models/Item';
+const Item = require('../../models/Item');
 
 // IMPORT FILE UPLOAD
-import upload from '../../utils/upload';
+const upload = require('../../utils/upload');
 
 // IMPORT PASSPORT MIDDLEWARE
-import isAuth from '../../middleware/auth';
+const isAuth = require('../../middleware/auth');
 
 const router = Router({ strict: true });
 
@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
     if (items.length < 1)
       return res.status(409).render('item', {
         title: 'Items',
-        error_msg: 'Items not found!',
+        error_msg: 'Items not found!'
       });
 
     return res.status(200).render('item', { title: 'Items', items });
@@ -56,7 +56,7 @@ router.post(
       .isEmpty(),
     check('provider', 'Please enter provider!')
       .not()
-      .isEmpty(),
+      .isEmpty()
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -69,7 +69,7 @@ router.post(
     if (!req.file)
       return res.status(400).render('item/addItem', {
         title: 'Add Items',
-        error_msg: 'Choose an image!',
+        error_msg: 'Choose an image!'
       });
 
     const { name, price, provider } = req.body;
@@ -79,7 +79,7 @@ router.post(
         name,
         price,
         provider,
-        image: req.file.path,
+        image: req.file.path
       });
 
       await item.save();
@@ -105,7 +105,7 @@ router.get('/:id', async (req, res, next) => {
     if (!item)
       return res.status(400).render('item/item', {
         title: 'Item Not Found',
-        error_msg: 'Item not found!',
+        error_msg: 'Item not found!'
       });
     return res.status(200).render('item/item', { title: 'Item', item });
   } catch (error) {
@@ -228,4 +228,4 @@ router.get('/unlike/:id', isAuth, async (req, res, next) => {
   }
 });
 
-export default router;
+module.exports = router;

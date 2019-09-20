@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import Stripe from 'stripe';
+const { Router } = require('express');
+const Stripe = require('stripe');
 
 // IMPORT MODELS
-import User from '../../models/User';
-import Item from '../../models/Item';
+const User = require('../../models/User');
+const Item = require('../../models/Item');
 
 // IMPORT PASSPORT MIDDLEWARE
-import isAuth from '../../middleware/auth';
+const isAuth = require('../../middleware/auth');
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -63,7 +63,7 @@ router.get('/', isAuth, async (req, res, next) => {
     if (user.items.length < 1)
       return res.status(409).render('cart', {
         title: 'Cart',
-        error_msg: 'It seems you have not added any items in your cart!',
+        error_msg: 'It seems you have not added any items in your cart!'
       });
 
     for (let i = 0; i < user.items.length; i++) {
@@ -73,7 +73,7 @@ router.get('/', isAuth, async (req, res, next) => {
     return res.status(200).render('cart', {
       title: 'Cart',
       items,
-      stripePubKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      stripePubKey: process.env.STRIPE_PUBLISHABLE_KEY
     });
   } catch (error) {
     console.log(error);
@@ -98,14 +98,14 @@ router.post('/charge/:amount/:desc', isAuth, async (req, res, next) => {
   try {
     const customer = await stripe.customers.create({
       email: req.body.stripeEmail,
-      source: req.body.stripeToken,
+      source: req.body.stripeToken
     });
 
     const charges = await stripe.charges.create({
       amount,
       description: desc,
       currency: 'usd',
-      customer: customer.id,
+      customer: customer.id
     });
 
     if (charges) {
@@ -141,7 +141,7 @@ router.delete('/:id', isAuth, async (req, res, next) => {
     )
       return res.status(400).render('cart', {
         title: 'Cart',
-        error_msg: 'Invalid request!',
+        error_msg: 'Invalid request!'
       });
 
     const user = await User.findById(req.user.id).exec();
@@ -154,7 +154,7 @@ router.delete('/:id', isAuth, async (req, res, next) => {
     if (user.items.filter(itm => itm.item.toString() === id).length < 1)
       return res.status(400).render('cart', {
         title: 'Cart',
-        error_msg: 'Invalid request!',
+        error_msg: 'Invalid request!'
       });
 
     // FIND REMOVE INDEX FROM ITEM
@@ -183,4 +183,4 @@ router.delete('/:id', isAuth, async (req, res, next) => {
   }
 });
 
-export default router;
+module.exports = router;

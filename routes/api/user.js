@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { hash } from 'bcryptjs';
-import { check, validationResult } from 'express-validator';
+const { Router } = require('express');
+const { hash } = require('bcryptjs');
+const { check, validationResult } = require('express-validator');
 
 // IMPORT MODELS
-import User from '../../models/User';
+const User = require('../../models/User');
 
 const router = Router({ strict: true });
 
@@ -77,4 +77,4 @@ router.post(
   }
 );
 
-export default router;
+module.exports = router;
